@@ -1,0 +1,27 @@
+type: tea
+id: tieguanyin
+schema_version: 1.0.0
+status: draft
+name_ru: Те Гуань Инь
+name_zh: 铁观音
+pinyin: Tiě Guānyīn
+aliases: [ТГИ]
+tags: [oolong, fujian, anxi]
+summary: "Энциклопедический узел чая Те Гуань Инь, независимый от конкретной партии или товара."
+relations:
+  - relation: HAS_TYPE
+    type: tea_type
+    id: oolong
+  - relation: MADE_FROM
+    type: cultivar
+    id: tieguanyin
+  - relation: GROWN_IN
+    type: region
+    id: anxi
+  - relation: BREW_GUIDE
+    type: brewing
+    id: oolong-gongfu
+  - relation: RELATED_TERM
+    type: terminology
+    id: hui-gan
+sources: []
