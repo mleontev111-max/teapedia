@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teapedia — Энциклопедия китайского чая</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&family=Noto+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container header-inner">
+            <a href="index.html" class="logo">
+                <span class="logo-icon">🍵</span>
+                <div class="logo-text">
+                    <span class="logo-main">Teapedia</span>
+                    <span class="logo-sub">Энциклопедия китайского чая</span>
+                </div>
+            </a>
+            <nav class="main-nav">
+                <a href="index.html" class="nav-link active">Каталог</a>
+                <a href="encyclopedia/index.html" class="nav-link">Энциклопедия</a>
+                <a href="#about" class="nav-link">О проекте</a>
+            </nav>
+            <button class="menu-toggle" aria-label="Меню">☰</button>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero -->
+        <section class="hero">
+            <div class="hero-bg"></div>
+            <div class="container hero-content">
+                <h1 class="hero-title">Познай чай<br>от листа до чашки</h1>
+                <p class="hero-desc">Teapedia — первая русскоязычная энциклопедия китайского чая с QR-кодами на упаковках. Сканируй и узнавай историю, терруар и рецепт заваривания каждого сорта.</p>
+                <div class="hero-actions">
+                    <a href="#catalog" class="btn btn-primary">В каталог чаёв</a>
+                    <a href="encyclopedia/index.html" class="btn btn-ghost">В энциклопедию</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats / Features -->
+        <section class="features">
+            <div class="container">
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🏔️</div>
+                        <h3>Терруар</h3>
+                        <p>Горы, провинции, почва и климат — всё, что влияет на вкус</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📜</div>
+                        <h3>История</h3>
+                        <p>Мифы, легенды и 7000 лет чайной культуры</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🔥</div>
+                        <h3>Обработка</h3>
+                        <p>6 категорий чая: от зелёного до пуэра</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🫖</div>
+                        <h3>Церемония</h3>
+                        <p>Гунфу ча, посуда и философия чаепития</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Catalog -->
+        <section class="catalog" id="catalog">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Каталог чаёв</h2>
+                    <p class="section-subtitle">Сорта из ассортимента THE CHAI с подробными карточками</p>
+                </div>
+
+                <!-- Filters -->
+                <div class="filters">
+                    <div class="filter-group">
+                        <button class="filter-btn active" data-filter="all">Все</button>
+                        <button class="filter-btn" data-filter="green">Зелёный</button>
+                        <button class="filter-btn" data-filter="white">Белый</button>
+                        <button class="filter-btn" data-filter="oolong">Улун</button>
+                        <button class="filter-btn" data-filter="red">Красный</button>
+                        <button class="filter-btn" data-filter="dark">Тёмный / Пуэр</button>
+                        <button class="filter-btn" data-filter="yellow">Жёлтый</button>
+                    </div>
+                    <div class="search-box">
+                        <input type="text" id="searchInput" placeholder="Поиск по названию, региону...">
+                        <span class="search-icon">🔍</span>
+                    </div>
+                </div>
+
+                <!-- Tea Grid -->
+                <div class="tea-grid" id="teaGrid">
+                    <!-- Карточки генерируются JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- QR Integration -->
+        <section class="qr-section">
+            <div class="container qr-inner">
+                <div class="qr-text">
+                    <h2>QR-код на каждой упаковке</h2>
+                    <p>Отсканируй код с пакетика чая — и попади прямо на страницу с историей сорта, рецептом заваривания и рекомендациями по посуде. Удобно для клиентов, полезно для бизнеса.</p>
+                    <div class="qr-features">
+                        <div class="qr-item">
+                            <span class="qr-bullet">1</span>
+                            <span>Сканируй QR на упаковке</span>
+                        </div>
+                        <div class="qr-item">
+                            <span class="qr-bullet">2</span>
+                            <span>Читай историю и терруар</span>
+                        </div>
+                        <div class="qr-item">
+                            <span class="qr-bullet">3</span>
+                            <span>Заваривай правильно</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="qr-visual">
+                    <div class="qr-phone">
+                        <div class="qr-screen">
+                            <div class="qr-placeholder">
+                                <div class="qr-code-mock"></div>
+                                <span>teapedia.ru/ tea/da-hong-pao</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About -->
+        <section class="about" id="about">
+            <div class="container about-inner">
+                <div class="about-text">
+                    <h2 class="section-title">О проекте Teapedia</h2>
+                    <p>Teapedia создаётся командой <strong>THE CHAI</strong> — чайного магазина в Санкт-Петербурге. Наша цель: сделать китайский чай понятным, доступным и увлекательным для каждого.</p>
+                    <p>Здесь собраны знания о терруаре, обработке, посуде и чайных церемониях — всё, что нужно, чтобы выбрать свой чай и заварить его идеально.</p>
+                    <div class="about-shops">
+                        <div class="shop">
+                            <strong>Невский проспект, 100</strong>
+                            <span>Чайный бутик</span>
+                        </div>
+                        <div class="shop">
+                            <strong>Балтийский бульвар, 4</strong>
+                            <span>У залива</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-visual">
+                    <div class="about-image-placeholder">
+                        <span>🍃</span>
+                        <p>Фото вашего магазина</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <div class="footer-brand">
+                <span class="logo-main">Teapedia</span>
+                <span>Энциклопедия китайского чая</span>
+            </div>
+            <div class="footer-links">
+                <a href="index.html">Каталог</a>
+                <a href="encyclopedia/index.html">Энциклопедия</a>
+                <a href="https://vk.ru/the_chai_spb" target="_blank">VK</a>
+            </div>
+            <div class="footer-copy">
+                © 2026 Teapedia × THE CHAI. Все права защищены.
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
