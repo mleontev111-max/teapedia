@@ -1,0 +1,15 @@
+type: cultivar
+id: tieguanyin
+schema_version: 1.0.0
+status: draft
+name_ru: Те Гуань Инь
+name_zh: 铁观音
+pinyin: Tiě Guānyīn
+aliases: []
+tags: [fujian, anxi, oolong]
+summary: "Культивар чайного растения, связанный с традицией Те Гуань Инь."
+relations:
+  - relation: ORIGINATES_IN
+    type: region
+    id: anxi
+sources: []
