@@ -1,0 +1,12 @@
+type: province
+id: fujian
+schema_version: 1.0.0
+status: draft
+name_ru: Фуцзянь
+name_zh: 福建
+pinyin: Fújiàn
+aliases: []
+tags: [china, tea-origin]
+summary: "Провинция Китая, связанная с несколькими важными традициями производства чая."
+relations: []
+sources: []
