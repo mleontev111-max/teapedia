@@ -1,120 +1,123 @@
-# 🎯 CHECKPOINT: Teapedia — Knowledge Graph v1
+# 🎯 CHECKPOINT: Teapedia — Knowledge Graph Wave 0
 
 ## Дата
 23 августа 2026
 
 ## Статус
-**Wave 0 / Schema-first начата и базовая модель зафиксирована.**
+**Wave 0 технически реализована. Перед окончательным закрытием требуется подтвердить зелёный прогон GitHub Actions.**
 
-## Главная архитектурная идея
-Teapedia развивается как **граф знаний**, а не как блог.
+## Главный принцип
+Teapedia развивается как **knowledge graph**, а не как блог. HTML-страницы являются представлением структурированных сущностей и их связей.
 
-Основной путь:
-`Tea → Cultivar / Region / TeaType / Brewing / Terminology`
+## ✅ Что уже зафиксировано
 
-Коммерческий слой отделён:
-`Tea → TeaBatch → Product → marketplace listing / QR`.
+- `SCHEMA.md` — Knowledge Graph Schema v1 (`1.0.0`).
+- `KNOWLEDGE_GRAPH_PLAN.md` — план развития графа примерно до 140 фундаментальных сущностей.
+- `TEAPEDIA_PLAN.md` — тематический backlog контента.
+- постоянные ID в lowercase Latin `kebab-case`.
+- разделение `Tea → TeaBatch → Product`.
+- направленные relations и автоматически вычисляемые обратные связи.
+- tasting как структурированные поля, а не только проза.
+- политика источников и статусов `draft/review/published/deprecated`.
 
-## Канонические документы
-- `SCHEMA.md` — технический контракт Knowledge Graph v1.
-- `KNOWLEDGE_GRAPH_PLAN.md` — волны 0–3 и целевая entity-first модель.
-- `TEAPEDIA_PLAN.md` — сохраняется как контентный backlog и тематический план.
+## 🧩 Эталонный граф
 
-## ✅ Что создано в Wave 0
+Созданы базовые узлы:
 
-### Schema v1
-Зафиксированы:
-- постоянные IDs в lowercase Latin kebab-case;
-- типы сущностей;
-- общий набор полей;
-- направленные relations;
-- генерация обратных связей индексатором;
-- разделение Tea / TeaBatch / Product;
-- структурная tasting-модель;
-- правила источников и фактчека;
-- версионирование схемы.
+1. `province/fujian`
+2. `region/anxi`
+3. `cultivar/tieguanyin`
+4. `tea_type/oolong`
+5. `tea/tieguanyin`
+6. `brewing/oolong-gongfu`
+7. `terminology/hui-gan`
 
-### 7 эталонных сущностей
-1. `data/entities/province/fujian.yml`
-2. `data/entities/region/anxi.yml`
-3. `data/entities/cultivar/tieguanyin.yml`
-4. `data/entities/tea_type/oolong.yml`
-5. `data/entities/tea/tieguanyin.yml`
-6. `data/entities/brewing/oolong-gongfu.yml`
-7. `data/entities/terminology/hui-gan.yml`
+## 🛍️ Первый реальный граф THE CHAI
 
-## Проверенная связность эталона
+Добавлены:
+
+- `producer/anxi-yaohui-tea-shop`
+- `tea_batch/tieguanyin-anxi-nongxiang-2026-yaohui`
+- `product/tieguanyin-nongxiang-7g-piece`
+- `product/tieguanyin-nongxiang-loose`
+
+Розничная модель:
+- пакет **7 г** продаётся как `piece`;
+- чай из исходной упаковки **250 г** продаётся по граммам (`sale_unit: gram`);
+- 250 г не является фиксированной розничной фасовкой.
+
+Не подтверждённые сведения партии сохранены как неизвестные/непроверенные: конкретный сезон, деревня, высота, точный культивар партии и степень обжарки.
+
+## 🔗 Проверяемая цепочка
 
 ```text
-Tea: tieguanyin
-├── HAS_TYPE → tea_type: oolong
-├── MADE_FROM → cultivar: tieguanyin
-├── GROWN_IN → region: anxi
-├── BREW_GUIDE → brewing: oolong-gongfu
-└── RELATED_TERM → terminology: hui-gan
+Product 7g ─┐
+            ├→ TeaBatch → Tea: Tieguanyin → TeaType: Oolong
+Loose tea ──┘               │
+                            ├→ Region: Anxi → Province: Fujian
+                            ├→ Cultivar: Tieguanyin
+                            ├→ Brewing: Oolong Gongfu
+                            └→ Terminology: Hui Gan
 
-region: anxi
-└── PART_OF → province: fujian
-
-cultivar: tieguanyin
-└── ORIGINATES_IN → region: anxi
+TeaBatch → Producer/Supplier: Anxi Yaohui
 ```
 
-Таким образом уже представим путь:
-`Tea → Region → Province` и связи Tea с типом, культиваром, завариванием и терминологией.
+## 🧪 Автоматическая проверка графа
 
-## Целевой фундамент
-Около **140 сущностей**:
-- TeaType — 8
-- Region/Province/Terroir — 27
-- Cultivar — 15
-- Tea — 30
-- Processing — 10
-- Teaware — 10
-- History — 8
-- Brewing — 9
-- Terminology — 25+
+Добавлены:
 
-Ориентир: ~85 полноценных страниц + ~55 коротких справочных узлов.
+- `requirements.txt` — PyYAML;
+- `scripts/validate_graph.py` — валидатор сущностей и связей;
+- `scripts/build_graph_index.py` — генератор общего и обратного индекса;
+- `.github/workflows/validate-knowledge-graph.yml` — GitHub Actions CI;
+- `.gitignore` — `data/generated/` не коммитится вручную.
 
-## Волны
+### Валидатор проверяет
 
-### Wave 0 — Schema
-Сейчас.
+- допустимые типы сущностей;
+- обязательные поля;
+- ID в `kebab-case`;
+- соответствие `folder/type/id/filename`;
+- версии схемы;
+- допустимые статусы;
+- допустимые relations;
+- существование target entity для каждой связи;
+- дублирующиеся сущности и relations.
 
-### Wave 1 — 35 сущностей
-6 категорий, 7 провинций, 5 терруарных/горных систем, 10 терминов, 7 brewing-guides.
+### Reverse index
 
-### Wave 2 — 50 сущностей
-20 культовых чаёв, 10 культиваров, 8 технологий, 12 регионов/деревень.
+`build_graph_index.py` строит `data/generated/graph-index.json` из исходных YAML и автоматически вычисляет входящие связи. Обратные связи не хранятся вручную, чтобы избежать расхождений.
 
-### Wave 3 — 55 сущностей
-История, посуда, расширенный глоссарий, первые реальные TeaBatch/Product THE CHAI и QR-связи.
+## 📁 Текущая data-архитектура
 
-## Важные правила
-- Не менять ID из-за изменения названия или URL.
-- Не хранить обратные связи вручную.
-- Не смешивать энциклопедический Tea с конкретной партией или SKU.
-- Tasting конкретной партии хранить структурно на TeaBatch.
-- Фактологически спорные данные не переводить в `published` без источников.
-- Health/science claims требуют усиленного фактчека.
+```text
+data/entities/
+├── province/
+├── region/
+├── cultivar/
+├── tea_type/
+├── tea/
+├── tea_batch/
+├── product/
+├── producer/
+├── brewing/
+└── terminology/
+```
 
-## Текущий риск / незавершённость
-- 7 эталонных сущностей пока имеют статус `draft` и минимальные sources.
-- Автоматический валидатор связей ещё не создан.
-- Генератор обратного индекса ещё не создан.
-- TeaBatch и Product описаны схемой, но эталонные файлы пока не заведены.
+По мере Wave 1 добавляются предусмотренные Schema v1 типы: `processing`, `teaware`, `history` и другие.
 
-## Следующий шаг
-**Завершить Wave 0 технически:**
-1. добавить schema validation;
-2. добавить link validator, проверяющий существование `type + id`;
-3. создать генератор обратных связей/индекса;
-4. завести тестовые `TeaBatch` и `Product`, чтобы пройти полный путь `Product → TeaBatch → Tea → Region → Province`;
-5. только после этого начинать массовое наполнение Wave 1.
+## ⚠️ Что ещё не считаем завершённым
 
-## Восстановление
-При проблемах сверяться сначала с `SCHEMA.md`, затем `KNOWLEDGE_GRAPH_PLAN.md`, затем этим checkpoint. Предыдущий `TEAPEDIA_PLAN.md` не удалять: он остаётся тематическим backlog.
+1. Нужно увидеть успешный CI-прогон `Validate Knowledge Graph` на `main`.
+2. После зелёного CI создать стабильную контрольную ветку `checkpoint/knowledge-graph-wave0`.
+3. Затем начинать Wave 1 и расширять фундаментальные сущности.
+
+## ▶️ Следующий шаг
+
+**Подтвердить CI → закрыть Wave 0 → начать Wave 1.**
+
+Первая Wave 1 должна расширять граф системно: категории чая, ключевые провинции/регионы, базовые термины и гайды по завариванию — без массового HTML-дублирования.
 
 ---
+
 © 2026 Teapedia × THE CHAI
