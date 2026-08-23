@@ -3,241 +3,107 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Энциклопедия китайского чая — Teapedia</title>
-    <meta name="description" content="Энциклопедия китайского чая: терруар, 6 категорий чая, посуда, чайная церемония, история, мифология. Teapedia × THE CHAI.">
-    <link rel="canonical" href="https://mleontev111-max.github.io/teapedia/encyclopedia/index.html">
-    <meta property="og:title" content="Энциклопедия китайского чая — Teapedia">
-    <meta property="og:description" content="Терруар, категории чая, посуда, церемония, история.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://mleontev111-max.github.io/teapedia/encyclopedia/index.html">
-    <meta name="twitter:card" content="summary">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&family=Noto+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../css/style.css">
+    <title>Энциклопедия чая — Teapedia</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Noto+Serif+SC:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        .encyclopedia { padding: 60px 0 80px; }
-        .encyclopedia .section-header { margin-bottom: 48px; }
-        .encyclopedia-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 24px;
+        :root {
+            --tea-green: #5a7247;
+            --tea-dark: #3d4f30;
+            --tea-light: #8fa878;
+            --tea-gold: #c4a35a;
+            --bg-cream: #f8f5f0;
+            --bg-paper: #fffef9;
+            --text-dark: #2c2c2c;
+            --text-muted: #6b6b6b;
         }
-        .ency-card {
-            background: var(--color-card);
-            border-radius: var(--radius);
-            padding: 32px;
-            border: 1px solid var(--color-border);
-            transition: all 0.3s ease;
-            text-decoration: none;
-            color: inherit;
-            display: block;
-        }
-        .ency-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-hover);
-            border-color: var(--color-accent-light);
-        }
-        .ency-icon {
-            font-size: 40px;
-            margin-bottom: 16px;
-        }
-        .ency-card h3 {
-            font-family: var(--font-serif);
-            font-size: 20px;
-            margin-bottom: 8px;
-        }
-        .ency-card p {
-            font-size: 14px;
-            color: var(--color-text-light);
-            line-height: 1.6;
-        }
-        .ency-card .meta {
-            margin-top: 16px;
-            font-size: 12px;
-            color: var(--color-accent);
-            font-weight: 600;
-        }
-        .timeline {
-            margin-top: 48px;
-            background: var(--color-card);
-            border-radius: var(--radius);
-            padding: 40px;
-            border: 1px solid var(--color-border);
-        }
-        .timeline h2 {
-            font-family: var(--font-serif);
-            font-size: 28px;
-            margin-bottom: 32px;
-            text-align: center;
-        }
-        .timeline-list {
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-        }
-        .timeline-item {
-            display: flex;
-            gap: 24px;
-            align-items: flex-start;
-        }
-        .timeline-year {
-            font-family: var(--font-serif);
-            font-size: 20px;
-            font-weight: 700;
-            color: var(--color-accent);
-            min-width: 100px;
-            text-align: right;
-        }
-        .timeline-content h4 {
-            font-size: 16px;
-            font-weight: 700;
-            margin-bottom: 4px;
-        }
-        .timeline-content p {
-            font-size: 14px;
-            color: var(--color-text-light);
-            line-height: 1.6;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg-cream); color: var(--text-dark); line-height: 1.7; }
+        .nav { background: linear-gradient(135deg, var(--tea-dark) 0%, var(--tea-green) 100%); padding: 1rem 0; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 20px rgba(0,0,0,0.15); }
+        .nav-container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center; }
+        .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: #fff; text-decoration: none; font-weight: 700; }
+        .nav-logo span { color: var(--tea-gold); }
+        .nav-links { display: flex; gap: 2rem; list-style: none; }
+        .nav-links a { color: rgba(255,255,255,0.9); text-decoration: none; font-size: 0.95rem; transition: color 0.3s; position: relative; }
+        .nav-links a:hover, .nav-links a.active { color: var(--tea-gold); }
+        .hero { background: linear-gradient(135deg, var(--tea-dark) 0%, var(--tea-green) 50%, #4a5d3a 100%); color: white; padding: 5rem 2rem; text-align: center; position: relative; overflow: hidden; }
+        .hero::before { content: ''; position: absolute; top: -50%; right: -10%; width: 600px; height: 600px; background: radial-gradient(circle, rgba(196,163,90,0.1) 0%, transparent 70%); border-radius: 50%; }
+        .hero h1 { font-family: 'Playfair Display', serif; font-size: 3.2rem; margin-bottom: 1rem; position: relative; }
+        .hero .chinese { font-family: 'Noto Serif SC', serif; font-size: 1.4rem; color: var(--tea-gold); display: block; margin-bottom: 1rem; opacity: 0.9; }
+        .hero p { font-size: 1.2rem; opacity: 0.9; max-width: 600px; margin: 0 auto; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 3rem 2rem; }
+        .section-title { font-family: 'Playfair Display', serif; font-size: 2.2rem; color: var(--tea-dark); margin-bottom: 0.5rem; text-align: center; }
+        .section-subtitle { text-align: center; color: var(--text-muted); margin-bottom: 3rem; font-size: 1.1rem; }
+        .encyclopedia-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; margin-bottom: 4rem; }
+        .encyclopedia-card { background: var(--bg-paper); border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.08); transition: transform 0.3s, box-shadow 0.3s; border: 1px solid rgba(90,114,71,0.1); }
+        .encyclopedia-card:hover { transform: translateY(-5px); box-shadow: 0 12px 40px rgba(0,0,0,0.12); }
+        .card-header { padding: 2rem 2rem 1rem; position: relative; }
+        .card-icon { width: 60px; height: 60px; background: linear-gradient(135deg, var(--tea-green), var(--tea-light)); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; margin-bottom: 1rem; }
+        .card-header h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--tea-dark); margin-bottom: 0.5rem; }
+        .card-header .chinese-title { font-family: 'Noto Serif SC', serif; color: var(--tea-gold); font-size: 0.95rem; }
+        .card-body { padding: 0 2rem 1.5rem; color: var(--text-muted); }
+        .card-footer { padding: 1rem 2rem 2rem; }
+        .read-more { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--tea-green); text-decoration: none; font-weight: 600; transition: gap 0.3s; }
+        .read-more:hover { gap: 1rem; color: var(--tea-dark); }
+        .quick-facts { background: linear-gradient(135deg, var(--tea-dark), var(--tea-green)); color: white; padding: 4rem 2rem; border-radius: 24px; margin-bottom: 4rem; }
+        .quick-facts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; max-width: 1000px; margin: 0 auto; text-align: center; }
+        .fact-item h4 { font-size: 2.5rem; color: var(--tea-gold); margin-bottom: 0.5rem; }
+        .fact-item p { opacity: 0.9; }
+        .footer { background: var(--tea-dark); color: rgba(255,255,255,0.8); padding: 3rem 2rem 2rem; text-align: center; }
+        .footer-content { max-width: 1200px; margin: 0 auto; }
+        .footer-logo { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: #fff; margin-bottom: 1rem; }
+        .footer-logo span { color: var(--tea-gold); }
+        .footer-links { display: flex; justify-content: center; gap: 2rem; margin: 1.5rem 0; flex-wrap: wrap; }
+        .footer-links a { color: rgba(255,255,255,0.7); text-decoration: none; transition: color 0.3s; }
+        .footer-links a:hover { color: var(--tea-gold); }
+        .footer-copy { margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); font-size: 0.9rem; opacity: 0.7; }
+        @media (max-width: 768px) { .hero h1 { font-size: 2rem; } .nav-links { display: none; } .encyclopedia-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
-    <header class="site-header">
-        <div class="container header-inner">
-            <a href="../index.html" class="logo">
-                <span class="logo-icon">🍵</span>
-                <div class="logo-text">
-                    <span class="logo-main">Teapedia</span>
-                    <span class="logo-sub">Энциклопедия китайского чая</span>
-                </div>
-            </a>
-            <nav class="main-nav" role="navigation" aria-label="Главное меню">
-                <a href="../index.html" class="nav-link">Каталог чая</a>
-                <a href="../ware.html" class="nav-link">Посуда</a>
-                <a href="index.html" class="nav-link active">Энциклопедия</a>
-                <a href="../index.html#about" class="nav-link">О проекте</a>
-            </nav>
-            <button class="menu-toggle" aria-label="Меню">☰</button>
+<nav class="nav">
+    <div class="nav-container">
+        <a href="../index.html" class="nav-logo">THE <span>CHAI</span></a>
+        <ul class="nav-links">
+            <li><a href="../index.html">Главная</a></li>
+            <li><a href="../catalog.html">Каталог</a></li>
+            <li><a href="index.html" class="active">Энциклопедия</a></li>
+            <li><a href="../about.html">О нас</a></li>
+            <li><a href="../contacts.html">Контакты</a></li>
+        </ul>
+    </div>
+</nav>
+<section class="hero">
+    <h1>Энциклопедия чая <span class="chinese">茶百科</span></h1>
+    <p>Погрузитесь в многовековую культуру китайского чая: от терруара и истории до церемоний и научных основ</p>
+</section>
+<div class="container">
+    <div class="quick-facts">
+        <div class="quick-facts-grid">
+            <div class="fact-item"><h4>6</h4><p>основных категорий чая</p></div>
+            <div class="fact-item"><h4>5000+</h4><p>лет истории чаепития</p></div>
+            <div class="fact-item"><h4>10</h4><p>знаменитых чайных регионов</p></div>
+            <div class="fact-item"><h4>700+</h4><p>химических соединений в листе</p></div>
         </div>
-    </header>
-
-    <main class="encyclopedia">
-        <div class="container">
-            <div class="section-header">
-                <h1 class="section-title">Энциклопедия китайского чая</h1>
-                <p class="section-subtitle">Знания, собранные в систему: от мифа до науки</p>
-            </div>
-
-            <div class="encyclopedia-grid">
-                <a href="#" class="ency-card">
-                    <div class="ency-icon">🏔️</div>
-                    <h3>Терруар и регионы</h3>
-                    <p>Чайный пояс Китая: Юньнань, Фуцзянь, Чжэцзян, Аньхой. Горы, высота, почва и климат — всё, что влияет на вкус.</p>
-                    <div class="meta">8 статей · В разработке</div>
-                </a>
-                <a href="#" class="ency-card">
-                    <div class="ency-icon">🔥</div>
-                    <h3>6 категорий чая</h3>
-                    <p>Зелёный, белый, жёлтый, улун, красный, тёмный. Как обработка меняет лист и создаёт вкус.</p>
-                    <div class="meta">6 статей · В разработке</div>
-                </a>
-                <a href="#" class="ency-card">
-                    <div class="ency-icon">🫖</div>
-                    <h3>Посуда и инструменты</h3>
-                    <p>Исинская глина, фарфор, гайвань, чайная доска. Как выбрать посуду под каждый тип чая.</p>
-                    <div class="meta">5 статей · В разработке</div>
-                </a>
-                <a href="#" class="ency-card">
-                    <div class="ency-icon">🧘</div>
-                    <h3>Чайная церемония</h3>
-                    <p>Гунфу ча, сунская церемония, буддийский чай. Философия чаепития в трёх учениях.</p>
-                    <div class="meta">4 статьи · В разработке</div>
-                </a>
-                <a href="#" class="ency-card">
-                    <div class="ency-icon">📜</div>
-                    <h3>Мифология и история</h3>
-                    <p>Легенда о Шэньнуне, «Ча Цзин» Лу Юя, 7000 лет чайной культуры в одном таймлайне.</p>
-                    <div class="meta">7 статей · В разработке</div>
-                </a>
-                <a href="#" class="ency-card">
-                    <div class="ency-icon">🔬</div>
-                    <h3>Наука о чае</h3>
-                    <p>Полифенолы, кофеин, теанин. Как чай влияет на организм и как правильно хранить.</p>
-                    <div class="meta">4 статьи · В разработке</div>
-                </a>
-            </div>
-
-            <div class="timeline">
-                <h2>⏳ Таймлайн: 7000 лет чая</h2>
-                <div class="timeline-list">
-                    <div class="timeline-item">
-                        <div class="timeline-year">2737 до н.э.</div>
-                        <div class="timeline-content">
-                            <h4>Легенда о Шэньнуне</h4>
-                            <p>Импераор Шэньнун открыл чай, когда листья упали в его котёл с кипятком. Начало чайной мифологии.</p>
-                        </div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-year">VIII век</div>
-                        <div class="timeline-content">
-                            <h4>«Ча Цзин» Лу Юя</h4>
-                            <p>Первый трактат о чае — 10 глав, описывающих всё: от посуды до воды. Чай становится культурой.</p>
-                        </div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-year">XII век</div>
-                        <div class="timeline-content">
-                            <h4>Сунская церемония</h4>
-                            <p>Порошковый чай, взбивание венчиком, чайные баттлы. Пик эстетизма чайной культуры.</p>
-                        </div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-year">XVII век</div>
-                        <div class="timeline-content">
-                            <h4>Рассыпной чай и гунфу ча</h4>
-                            <p>Династия Мин отменяет порошковый чай. Рождается гунфу ча — «чай с усилием», мастерство заваривания.</p>
-                        </div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-year">XIX век</div>
-                        <div class="timeline-content">
-                            <h4>Чай идёт в мир</h4>
-                            <p>Ци Мэнь Хун Ча покоряет Англию. Рождается «English Breakfast». Чай становится глобальным.</p>
-                        </div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-year">1973</div>
-                        <div class="timeline-content">
-                            <h4>Изобретение Шу Пуэра</h4>
-                            <p>Технология вэйдуй позволяет создавать «старый» пуэр за месяцы. Революция в мире тёмного чая.</p>
-                        </div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-year">2026</div>
-                        <div class="timeline-content">
-                            <h4>Teapedia</h4>
-                            <p>THE CHAI запускает первую русскоязычную интерактивную энциклопедию китайского чая с QR-кодами.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    </div>
+    <h2 class="section-title">Разделы энциклопедии</h2>
+    <p class="section-subtitle">Выберите тему для углублённого изучения</p>
+    <div class="encyclopedia-grid">
+        <article class="encyclopedia-card"><div class="card-header"><div class="card-icon">🍃</div><h3>Терруар и регионы</h3><span class="chinese-title">茶区与风土</span></div><div class="card-body"><p>Десять великих чайных регионов Китая: от гор Фэнхуан Даньцун до Большой Снежной горы. Как почва, высота и климат создают неповторимый характер каждого чая.</p></div><div class="card-footer"><a href="articles/terroir.html" class="read-more">Читать статью →</a></div></article>
+        <article class="encyclopedia-card"><div class="card-header"><div class="card-icon">📚</div><h3>Категории чая</h3><span class="chinese-title">茶叶分类</span></div><div class="card-body"><p>Шесть классических категорий: зелёный, белый, жёлтый, улун, красный и чёрный (шу пуэр). Сорта, степени ферментации и особенности производства каждой группы.</p></div><div class="card-footer"><a href="articles/categories.html" class="read-more">Читать статью →</a></div></article>
+        <article class="encyclopedia-card"><div class="card-header"><div class="card-icon">🏺</div><h3>Посуда для чайной церемонии</h3><span class="chinese-title">茶具</span></div><div class="card-body"><p>Исинская глина, фарфор Дэхуа, чайники из яшмы и обсидиана. Как выбрать посуду под конкретный чай и как за ней ухаживать.</p></div><div class="card-footer"><a href="articles/ware.html" class="read-more">Читать статью →</a></div></article>
+        <article class="encyclopedia-card"><div class="card-header"><div class="card-icon">🫖</div><h3>Чайная церемония Гунфу Ча</h3><span class="chinese-title">功夫茶</span></div><div class="card-body"><p>Искусство «чая с мастерством»: от подготовки воды и прогрева посуды до правил подачи и знаков вежливости. Пошаговое руководство.</p></div><div class="card-footer"><a href="articles/ceremony.html" class="read-more">Читать статью →</a></div></article>
+        <article class="encyclopedia-card"><div class="card-header"><div class="card-icon">📜</div><h3>История чая в Китае</h3><span class="chinese-title">茶史</span></div><div class="card-body"><p>От легенды о Шэньнуне до чайных империй Тан и Сун. Как чай изменил мировую торговлю, культуру и политику на тысячелетия.</p></div><div class="card-footer"><a href="articles/history.html" class="read-more">Читать статью →</a></div></article>
+        <article class="encyclopedia-card"><div class="card-header"><div class="card-icon">🔬</div><h3>Научные основы чая</h3><span class="chinese-title">茶科学</span></div><div class="card-body"><p>Химия чайного листа: катехины, теанин, кофеин. Как ферментация меняет состав, и что наука говорит о пользе чая для здоровья.</p></div><div class="card-footer"><a href="articles/science.html" class="read-more">Читать статью →</a></div></article>
+    </div>
+</div>
+<footer class="footer">
+    <div class="footer-content">
+        <div class="footer-logo">THE <span>CHAI</span></div>
+        <div class="footer-links">
+            <a href="../index.html">Главная</a><a href="../catalog.html">Каталог</a><a href="index.html">Энциклопедия</a><a href="../about.html">О нас</a><a href="../contacts.html">Контакты</a>
         </div>
-    </main>
-
-    <footer class="site-footer">
-        <div class="container footer-inner">
-            <div class="footer-brand">
-                <span class="logo-main">Teapedia</span>
-                <span>Энциклопедия китайского чая</span>
-            </div>
-            <div class="footer-links">
-                <a href="../index.html">Каталог</a>
-                <a href="index.html">Энциклопедия</a>
-                <a href="https://vk.ru/the_chai_spb" target="_blank">VK</a>
-            </div>
-            <div class="footer-copy">© 2026 Teapedia × THE CHAI</div>
-        </div>
-    </footer>
-
-    <script src="../js/app.js"></script>
+        <div class="footer-copy"><p>© 2026 THE CHAI. Все права защищены.</p><p>Невский проспект, 100 | Балтийский бульвар, 4 | Санкт-Петербург</p></div>
+    </div>
+</footer>
 </body>
 </html>
