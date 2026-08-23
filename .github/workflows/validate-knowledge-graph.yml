@@ -1,0 +1,61 @@
+name: Validate Knowledge Graph
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'data/entities/**'
+      - 'scripts/validate_graph.py'
+      - 'scripts/build_graph_index.py'
+      - 'requirements.txt'
+      - '.github/workflows/validate-knowledge-graph.yml'
+  pull_request:
+    paths:
+      - 'data/entities/**'
+      - 'scripts/validate_graph.py'
+      - 'scripts/build_graph_index.py'
+      - 'requirements.txt'
+      - '.github/workflows/validate-knowledge-graph.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Validate entity schema and relations
+        run: python scripts/validate_graph.py
+
+      - name: Build reverse graph index
+        run: python scripts/build_graph_index.py
+
+      - name: Show generated graph summary
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p = Path('data/generated/graph-index.json')
+          data = json.loads(p.read_text(encoding='utf-8'))
+          print('entity_count:', data['entity_count'])
+          print('incoming_nodes:', len(data['incoming']))
+          PY
+
+      - name: Upload generated graph index
+        uses: actions/upload-artifact@v4
+        with:
+          name: teapedia-graph-index
+          path: data/generated/graph-index.json
