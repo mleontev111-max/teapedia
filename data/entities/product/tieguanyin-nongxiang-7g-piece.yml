@@ -1,0 +1,30 @@
+type: product
+id: tieguanyin-nongxiang-7g-piece
+schema_version: 1.0.0
+status: review
+brand: THE CHAI
+name_ru: Те Гуань Инь Нунсян, индивидуальный пакет 7 г
+sale_unit: piece
+net_weight_g_per_unit: 7
+packaging: individual-vacuum-packet
+availability: current
+relations:
+  - relation: REPRESENTS
+    type: tea_batch
+    id: tieguanyin-anxi-nongxiang-2026-yaohui
+  - relation: SOLD_AS
+    type: tea
+    id: tieguanyin
+tags:
+  - the-chai
+  - tieguanyin
+  - piece
+  - 7g
+sources:
+  - title: Розничная модель THE CHAI, подтверждённая владельцем
+    kind: first-party
+    accessed: 2026-08-23
+    supports:
+      - sale_unit
+      - net_weight_g_per_unit
+      - packaging
