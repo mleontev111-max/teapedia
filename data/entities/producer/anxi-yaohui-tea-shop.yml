@@ -1,0 +1,42 @@
+type: producer
+id: anxi-yaohui-tea-shop
+schema_version: 1.0.0
+status: review
+name_ru: Аньси Чаду Яо Хуэй Чахан
+name_zh: 安溪县茶都耀辉茶行
+pinyin: Anxixian Chadu Yaohui Chahang
+aliases:
+  - 安溪县耀辉茶叶
+  - 德闽耀辉
+producer_kind: supplier-tea-shop
+location_text: 福建省安溪县茶都三期N160号
+legal_owner_zh: 陈炳辉
+registration_date: 2015-07-06
+registered_capital_cny: 50000
+social_credit_code: 92350524MA30Y9XY0E
+food_production_license: SC11435052405142
+summary: Поставщик/чайная торговая точка в Чайном городе Аньси. Наличие собственного сада или производство конкретной партии на собственной фабрике не подтверждено.
+relations:
+  - relation: ORIGINATES_IN
+    type: region
+    id: anxi
+tags:
+  - supplier
+  - anxi
+  - fujian
+sources:
+  - title: Данные поставщика и листинга, переданные THE CHAI
+    kind: supplier-listing
+    accessed: 2026-08-23
+    supports:
+      - name_zh
+      - aliases
+      - location_text
+      - legal_owner_zh
+      - registration_date
+      - registered_capital_cny
+      - social_credit_code
+      - food_production_license
+notes:
+  - Не утверждать, что поставщик владеет плантацией.
+  - Не утверждать, что лицензия SC относится именно к месту выращивания листа без отдельной проверки.
