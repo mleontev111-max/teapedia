@@ -1,0 +1,15 @@
+type: brewing
+id: oolong-gongfu
+schema_version: 1.0.0
+status: draft
+name_ru: Заваривание улунов методом Гунфу Ча
+name_zh: 乌龙茶工夫泡法
+pinyin: Wūlóngchá Gōngfū Pàofǎ
+aliases: []
+tags: [oolong, gongfu-cha]
+summary: "Базовый узел-гайд для заваривания улунов методом последовательных проливов."
+relations:
+  - relation: ASSOCIATED_WITH
+    type: tea_type
+    id: oolong
+sources: []
