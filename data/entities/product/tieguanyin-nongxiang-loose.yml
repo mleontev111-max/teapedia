@@ -1,0 +1,31 @@
+type: product
+id: tieguanyin-nongxiang-loose
+schema_version: 1.0.0
+status: review
+brand: THE CHAI
+name_ru: Те Гуань Инь Нунсян, развесной
+sale_unit: gram
+source_pack_weight_g: 250
+packaging: weighed-from-source-vacuum-pack
+availability: current
+relations:
+  - relation: REPRESENTS
+    type: tea_batch
+    id: tieguanyin-anxi-nongxiang-2026-yaohui
+  - relation: SOLD_AS
+    type: tea
+    id: tieguanyin
+tags:
+  - the-chai
+  - tieguanyin
+  - loose-tea
+sources:
+  - title: Розничная модель THE CHAI, подтверждённая владельцем
+    kind: first-party
+    accessed: 2026-08-23
+    supports:
+      - sale_unit
+      - source_pack_weight_g
+      - packaging
+notes:
+  - 250 г — складская/исходная упаковка поставщика, а не фиксированная розничная фасовка.
