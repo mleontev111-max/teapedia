@@ -1,0 +1,87 @@
+type: tea_batch
+id: tieguanyin-anxi-nongxiang-2026-yaohui
+schema_version: 1.0.0
+status: review
+name_ru: Те Гуань Инь Аньси Нунсян, партия 2026
+name_zh: 安溪铁观音浓香型
+pinyin: Ānxī Tiě Guānyīn Nóngxiāng Xíng
+year: 2026
+season: unknown
+season_claim: Вероятно весна, но листинг не подтверждает сезон явно.
+grade_zh: 一级
+style:
+  id: nongxiang
+  name_ru: насыщенный аромат
+  name_zh: 浓香型
+origin_claim:
+  province: fujian
+  region: anxi
+  high_mountain_claim: true
+  exact_village: unknown
+  altitude_m: unknown
+cultivar_claim: unverified
+processing_claim:
+  roast_level: unknown
+  notes: Стиль 浓香型 указывает на более выраженную обработку/обжарку, но конкретная схема и степень обжарки поставщиком не подтверждены.
+supplier_listing:
+  taste_claim_zh: 醇厚鲜爽
+  infusions_claim: 10
+  purity_percent_claim: 98
+  storage_claim_zh: 冷藏
+  shelf_life_months: 12
+  barcode: X20121010838
+  article: '202110'
+source_packaging:
+  - kind: vacuum-packet
+    net_weight_g: 7
+    retail_use: sold-per-piece
+  - kind: vacuum-pack
+    net_weight_g: 250
+    retail_use: source-pack-for-loose-sale
+relations:
+  - relation: BATCH_OF
+    type: tea
+    id: tieguanyin
+  - relation: GROWN_IN
+    type: region
+    id: anxi
+  - relation: HAS_TYPE
+    type: tea_type
+    id: oolong
+  - relation: PRODUCED_BY
+    type: producer
+    id: anxi-yaohui-tea-shop
+  - relation: BREW_GUIDE
+    type: brewing
+    id: oolong-gongfu
+tasting:
+  status: not-yet-recorded
+  sweetness: null
+  astringency: null
+  bitterness: null
+  body: null
+  aroma: []
+  hui_gan: null
+  sheng_jin: null
+  finish: null
+tags:
+  - tieguanyin
+  - anxi
+  - nongxiang
+  - '2026'
+sources:
+  - title: Листинг поставщика и данные, переданные THE CHAI
+    kind: supplier-listing
+    accessed: 2026-08-23
+    supports:
+      - year
+      - grade_zh
+      - style
+      - origin_claim
+      - supplier_listing
+      - source_packaging
+notes:
+  - Весенний сезон не считать подтверждённым фактом.
+  - Конкретная деревня и высота не известны.
+  - Точный культивар партии не подтверждён.
+  - PRODUCED_BY в v1 означает коммерчески связанного поставщика/заявленного производителя; собственная плантация не подразумевается.
