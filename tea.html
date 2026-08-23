@@ -4,16 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Карточка чая — Teapedia</title>
+    <meta name="description" content="Подробная карточка чая: история, терруар, рецепт заваривания, польза для здоровья. Энциклопедия китайского чая Teapedia.">
+    <link rel="canonical" href="https://mleontev111-max.github.io/teapedia/tea.html">
+    <meta property="og:title" content="Карточка чая — Teapedia">
+    <meta property="og:description" content="История, терруар, рецепт заваривания и польза чая.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://mleontev111-max.github.io/teapedia/tea.html">
+    <meta name="twitter:card" content="summary">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&family=Noto+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <style>
         .tea-page { padding: 40px 0 80px; }
-        .tea-breadcrumb {
+        .tea-breadcrumb ol {
+            display: flex;
+            list-style: none;
+            gap: 8px;
             font-size: 14px;
             color: var(--color-text-light);
             margin-bottom: 24px;
         }
+        .tea-breadcrumb li:not(:last-child)::after { content: '›'; margin-left: 8px; opacity: 0.5; }
         .tea-breadcrumb a { color: var(--color-accent); text-decoration: none; }
         .tea-breadcrumb a:hover { text-decoration: underline; }
         .tea-detail-grid {
@@ -171,7 +182,7 @@
             content: '';
             position: absolute;
             inset: 10px;
-            border: 3px solid var(--color-card);
+            border: 2px solid var(--color-card);
             border-radius: 4px;
         }
         .qr-code::after {
@@ -207,17 +218,18 @@
     </style>
 </head>
 <body>
-    <header class="site-header">
+    <header class="site-header" role="banner">
         <div class="container header-inner">
-            <a href="index.html" class="logo">
-                <span class="logo-icon">🍵</span>
+            <a href="index.html" class="logo" aria-label="Teapedia — на главную">
+                <span class="logo-icon" aria-hidden="true">🍵</span>
                 <div class="logo-text">
                     <span class="logo-main">Teapedia</span>
                     <span class="logo-sub">Энциклопедия китайского чая</span>
                 </div>
             </a>
-            <nav class="main-nav">
-                <a href="index.html" class="nav-link">Каталог</a>
+            <nav class="main-nav" role="navigation" aria-label="Главное меню">
+                <a href="index.html" class="nav-link">Каталог чая</a>
+                <a href="ware.html" class="nav-link">Посуда</a>
                 <a href="encyclopedia/index.html" class="nav-link">Энциклопедия</a>
                 <a href="index.html#about" class="nav-link">О проекте</a>
             </nav>
@@ -225,23 +237,24 @@
         </div>
     </header>
 
-    <main class="tea-page">
+    <main class="tea-page" role="main">
         <div class="container" id="teaContainer">
             <!-- Контент загружается JS -->
         </div>
     </main>
 
-    <footer class="site-footer">
+    <footer class="site-footer" role="contentinfo">
         <div class="container footer-inner">
             <div class="footer-brand">
                 <span class="logo-main">Teapedia</span>
                 <span>Энциклопедия китайского чая</span>
             </div>
-            <div class="footer-links">
-                <a href="index.html">Каталог</a>
+            <nav class="footer-links" aria-label="Нижнее меню">
+                <a href="index.html">Каталог чая</a>
+                <a href="ware.html">Посуда</a>
                 <a href="encyclopedia/index.html">Энциклопедия</a>
-                <a href="https://vk.ru/the_chai_spb" target="_blank">VK</a>
-            </div>
+                <a href="https://vk.ru/the_chai_spb" target="_blank" rel="noopener">VK</a>
+            </nav>
             <div class="footer-copy">© 2026 Teapedia × THE CHAI</div>
         </div>
     </footer>
@@ -255,6 +268,7 @@
             const container = document.getElementById('teaContainer');
 
             if (!tea) {
+                document.title = 'Чай не найден — Teapedia';
                 container.innerHTML = `
                     <div class="not-found">
                         <h1>🍵 Чай не найден</h1>
@@ -265,7 +279,33 @@
                 return;
             }
 
-            document.title = `${tea.name} — Teapedia`;
+            document.title = `${tea.name} (${tea.categoryName}) — Teapedia`;
+
+            // Добавляем meta description динамически
+            const metaDesc = document.createElement('meta');
+            metaDesc.name = 'description';
+            metaDesc.content = `${tea.name} (${tea.nameCn}) — ${tea.categoryName} чай из ${tea.origin}. ${tea.description.substring(0, 120)}...`;
+            document.head.appendChild(metaDesc);
+
+            // Schema.org Product JSON-LD
+            const schema = document.createElement('script');
+            schema.type = 'application/ld+json';
+            schema.textContent = JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "Product",
+                "name": tea.name,
+                "alternateName": tea.nameCn,
+                "description": tea.description,
+                "category": tea.categoryName,
+                "offers": {
+                    "@type": "Offer",
+                    "price": tea.price.replace(/[^0-9]/g, ''),
+                    "priceCurrency": "RUB",
+                    "availability": "https://schema.org/InStock"
+                },
+                "brand": { "@type": "Brand", "name": "THE CHAI" }
+            });
+            document.head.appendChild(schema);
 
             const badgeColors = {
                 green: { bg: '#E8F5E9', text: '#2E7D32' },
@@ -278,94 +318,112 @@
             const bc = badgeColors[tea.category] || { bg: '#F5F0E8', text: '#2C2416' };
 
             container.innerHTML = `
-                <div class="tea-breadcrumb">
-                    <a href="index.html">← Каталог</a> / <span>${tea.name}</span>
-                </div>
+                <nav class="tea-breadcrumb" aria-label="Хлебные крошки">
+                    <ol itemscope itemtype="https://schema.org/BreadcrumbList">
+                        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                            <a itemprop="item" href="index.html"><span itemprop="name">Главная</span></a>
+                            <meta itemprop="position" content="1">
+                        </li>
+                        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                            <a itemprop="item" href="index.html#catalog"><span itemprop="name">Каталог чая</span></a>
+                            <meta itemprop="position" content="2">
+                        </li>
+                        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                            <span itemprop="name">${tea.name}</span>
+                            <meta itemprop="position" content="3">
+                        </li>
+                    </ol>
+                </nav>
 
-                <div class="tea-detail-grid">
-                    <div class="tea-visual" style="background:${bc.bg};">
-                        <span>🍃</span>
-                        <p>Загрузите фото чая</p>
-                    </div>
-                    <div class="tea-header">
-                        <h1>${tea.name}</h1>
-                        <span class="name-cn">${tea.nameCn}</span>
-                        <span class="badge" style="background:${bc.bg};color:${bc.text};">${tea.categoryName}</span>
-                        <div class="tea-price-big">${tea.price}</div>
-                        <div class="tea-meta-grid">
-                            <div class="meta-item">
-                                <div class="meta-label">Регион</div>
-                                <div class="meta-value">${tea.origin}</div>
+                <article itemscope itemtype="https://schema.org/Product">
+                    <div class="tea-detail-grid">
+                        <div class="tea-visual" style="background:${bc.bg};" itemprop="image">
+                            <span aria-hidden="true">🍃</span>
+                            <p>Загрузите фото чая</p>
+                        </div>
+                        <div class="tea-header">
+                            <h1 itemprop="name">${tea.name}</h1>
+                            <span class="name-cn" itemprop="alternateName">${tea.nameCn}</span>
+                            <span class="badge" style="background:${bc.bg};color:${bc.text};" itemprop="category">${tea.categoryName}</span>
+                            <div class="tea-price-big" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+                                <span itemprop="price">${tea.price.replace(/[^0-9]/g, '')}</span>
+                                <span itemprop="priceCurrency" content="RUB">₽</span>
                             </div>
-                            <div class="meta-item">
-                                <div class="meta-label">Высота</div>
-                                <div class="meta-value">${tea.altitude}</div>
+                            <div class="tea-meta-grid">
+                                <div class="meta-item">
+                                    <div class="meta-label">Регион</div>
+                                    <div class="meta-value">${tea.origin}</div>
+                                </div>
+                                <div class="meta-item">
+                                    <div class="meta-label">Высота</div>
+                                    <div class="meta-value">${tea.altitude}</div>
+                                </div>
+                                <div class="meta-item">
+                                    <div class="meta-label">Окисление</div>
+                                    <div class="meta-value">${tea.oxidation}</div>
+                                </div>
+                                <div class="meta-item">
+                                    <div class="meta-label">Сбор</div>
+                                    <div class="meta-value">${tea.harvest}</div>
+                                </div>
                             </div>
-                            <div class="meta-item">
-                                <div class="meta-label">Окисление</div>
-                                <div class="meta-value">${tea.oxidation}</div>
-                            </div>
-                            <div class="meta-item">
-                                <div class="meta-label">Сбор</div>
-                                <div class="meta-value">${tea.harvest}</div>
-                            </div>
-                        </div>
-                        <p class="tea-description">${tea.description}</p>
-                    </div>
-                </div>
-
-                <div class="brewing-section">
-                    <h2>☕ Рецепт заваривания</h2>
-                    <div class="brewing-grid">
-                        <div class="brew-item">
-                            <div class="brew-icon">🌡️</div>
-                            <div class="brew-label">Температура</div>
-                            <div class="brew-value">${tea.brewing.temp}</div>
-                        </div>
-                        <div class="brew-item">
-                            <div class="brew-icon">⚖️</div>
-                            <div class="brew-label">Дозировка</div>
-                            <div class="brew-value">${tea.brewing.amount}</div>
-                        </div>
-                        <div class="brew-item">
-                            <div class="brew-icon">⏱️</div>
-                            <div class="brew-label">Время</div>
-                            <div class="brew-value">${tea.brewing.time}</div>
-                        </div>
-                        <div class="brew-item">
-                            <div class="brew-icon">🫖</div>
-                            <div class="brew-label">Посуда</div>
-                            <div class="brew-value">${tea.brewing.vessel}</div>
-                        </div>
-                        <div class="brew-item">
-                            <div class="brew-icon">🔁</div>
-                            <div class="brew-label">Заварок</div>
-                            <div class="brew-value">${tea.brewing.infusions}</div>
+                            <p class="tea-description" itemprop="description">${tea.description}</p>
                         </div>
                     </div>
-                </div>
 
-                <div class="info-section">
-                    <h2>📜 История</h2>
-                    <p>${tea.history}</p>
-                </div>
+                    <section class="brewing-section" aria-label="Рецепт заваривания">
+                        <h2>☕ Рецепт заваривания</h2>
+                        <div class="brewing-grid">
+                            <div class="brew-item">
+                                <div class="brew-icon">🌡️</div>
+                                <div class="brew-label">Температура</div>
+                                <div class="brew-value">${tea.brewing.temp}</div>
+                            </div>
+                            <div class="brew-item">
+                                <div class="brew-icon">⚖️</div>
+                                <div class="brew-label">Дозировка</div>
+                                <div class="brew-value">${tea.brewing.amount}</div>
+                            </div>
+                            <div class="brew-item">
+                                <div class="brew-icon">⏱️</div>
+                                <div class="brew-label">Время</div>
+                                <div class="brew-value">${tea.brewing.time}</div>
+                            </div>
+                            <div class="brew-item">
+                                <div class="brew-icon">🫖</div>
+                                <div class="brew-label">Посуда</div>
+                                <div class="brew-value">${tea.brewing.vessel}</div>
+                            </div>
+                            <div class="brew-item">
+                                <div class="brew-icon">🔁</div>
+                                <div class="brew-label">Заварок</div>
+                                <div class="brew-value">${tea.brewing.infusions}</div>
+                            </div>
+                        </div>
+                    </section>
 
-                <div class="info-section">
-                    <h2>💚 Польза</h2>
-                    <p>${tea.health}</p>
-                </div>
+                    <section class="info-section" aria-label="История чая">
+                        <h2>📜 История</h2>
+                        <p>${tea.history}</p>
+                    </section>
 
-                <div class="info-section">
-                    <h2>👅 Вкусовой профиль</h2>
-                    <p>${tea.flavor}</p>
-                </div>
+                    <section class="info-section" aria-label="Польза для здоровья">
+                        <h2>💚 Польза</h2>
+                        <p>${tea.health}</p>
+                    </section>
 
-                <div class="qr-box">
-                    <h3>📱 QR-код для упаковки</h3>
-                    <p>Отсканируйте, чтобы открыть эту страницу на телефоне</p>
-                    <div class="qr-code"></div>
-                    <div class="qr-url">${tea.qrUrl}</div>
-                </div>
+                    <section class="info-section" aria-label="Вкусовой профиль">
+                        <h2>👅 Вкусовой профиль</h2>
+                        <p>${tea.flavor}</p>
+                    </section>
+
+                    <div class="qr-box">
+                        <h3>📱 QR-код для упаковки</h3>
+                        <p>Отсканируйте, чтобы открыть эту страницу на телефоне</p>
+                        <div class="qr-code"></div>
+                        <div class="qr-url">${tea.qrUrl}</div>
+                    </div>
+                </article>
             `;
         });
     </script>

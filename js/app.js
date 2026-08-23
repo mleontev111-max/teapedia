@@ -1,8 +1,11 @@
 // ===== TEAPEDIA APP =====
 const API_URL = 'data/teas.json';
+const WARE_URL = 'data/ware.json';
 let allTeas = [];
+let allWare = { categories: [], items: [] };
 let currentFilter = 'all';
 let currentSearch = '';
+let currentWareFilter = 'all';
 
 // Инициализация
 document.addEventListener('DOMContentLoaded', () => {
@@ -10,9 +13,14 @@ document.addEventListener('DOMContentLoaded', () => {
     setupFilters();
     setupSearch();
     setupMobileMenu();
+
+    // Если есть блок посуды на главной — загрузим категории
+    if (document.getElementById('wareCategories')) {
+        loadWareCategories();
+    }
 });
 
-// Загрузка данных
+// ===== ЧАЙ =====
 async function loadTeas() {
     try {
         const response = await fetch(API_URL);
@@ -20,35 +28,24 @@ async function loadTeas() {
         renderTeas();
     } catch (error) {
         console.error('Ошибка загрузки чаёв:', error);
-        document.getElementById('teaGrid').innerHTML = `
-            <div class="error-message" style="grid-column:1/-1;text-align:center;padding:40px;color:var(--color-text-light);">
-                <p>Не удалось загрузить каталог. Проверьте подключение.</p>
-            </div>
-        `;
+        const grid = document.getElementById('teaGrid');
+        if (grid) {
+            grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--color-text-light);"><p>Не удалось загрузить каталог чая.</p></div>`;
+        }
     }
 }
 
-// Рендеринг карточек
 function renderTeas() {
     const grid = document.getElementById('teaGrid');
     if (!grid) return;
-
     const filtered = filterTeas();
-
     if (filtered.length === 0) {
-        grid.innerHTML = `
-            <div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--color-text-light);">
-                <p style="font-size:18px;margin-bottom:8px;">🍵 Ничего не найдено</p>
-                <p>Попробуйте изменить фильтр или поисковый запрос</p>
-            </div>
-        `;
+        grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--color-text-light);"><p style="font-size:18px;margin-bottom:8px;">🍵 Ничего не найдено</p><p>Попробуйте изменить фильтр или поисковый запрос</p></div>`;
         return;
     }
-
     grid.innerHTML = filtered.map(tea => createTeaCard(tea)).join('');
 }
 
-// Фильтрация
 function filterTeas() {
     return allTeas.filter(tea => {
         const matchCategory = currentFilter === 'all' || tea.category === currentFilter;
@@ -63,30 +60,12 @@ function filterTeas() {
     });
 }
 
-// Карточка чая
 function createTeaCard(tea) {
     const badgeClass = `badge-${tea.category}`;
-    const categoryColors = {
-        green: '#E8F5E9',
-        white: '#F5F5F5',
-        oolong: '#FFF3E0',
-        red: '#FFEBEE',
-        dark: '#3E2723',
-        yellow: '#FFFDE7'
-    };
-    const categoryTextColors = {
-        green: '#2E7D32',
-        white: '#616161',
-        oolong: '#E65100',
-        red: '#C62828',
-        dark: '#D7CCC8',
-        yellow: '#F9A825'
-    };
-
     return `
-        <a href="tea.html?id=${tea.id}" class="tea-card" data-category="${tea.category}">
-            <div class="tea-image" style="background: ${categoryColors[tea.category] || '#F5F0E8'};">
-                <span class="tea-image-placeholder">🍃</span>
+        <a href="tea.html?id=${tea.id}" class="tea-card" data-category="${tea.category}" role="listitem">
+            <div class="tea-image">
+                <span class="tea-image-placeholder" aria-hidden="true">🍃</span>
                 <span class="tea-badge ${badgeClass}">${tea.categoryName}</span>
             </div>
             <div class="tea-info">
@@ -106,24 +85,22 @@ function createTeaCard(tea) {
     `;
 }
 
-// Фильтры
 function setupFilters() {
-    const buttons = document.querySelectorAll('.filter-btn');
+    const buttons = document.querySelectorAll('.filter-btn[data-filter]');
     buttons.forEach(btn => {
         btn.addEventListener('click', () => {
-            buttons.forEach(b => b.classList.remove('active'));
+            buttons.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-pressed', 'false'); });
             btn.classList.add('active');
+            btn.setAttribute('aria-pressed', 'true');
             currentFilter = btn.dataset.filter;
             renderTeas();
         });
     });
 }
 
-// Поиск
 function setupSearch() {
     const input = document.getElementById('searchInput');
     if (!input) return;
-
     let timeout;
     input.addEventListener('input', (e) => {
         clearTimeout(timeout);
@@ -134,43 +111,119 @@ function setupSearch() {
     });
 }
 
-// Мобильное меню
+// ===== ПОСУДА =====
+async function loadWare() {
+    try {
+        const response = await fetch(WARE_URL);
+        allWare = await response.json();
+        renderWare();
+        setupWareFilters();
+    } catch (error) {
+        console.error('Ошибка загрузки посуды:', error);
+        const grid = document.getElementById('wareGrid');
+        if (grid) grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:40px;"><p>Не удалось загрузить каталог посуды.</p></div>`;
+    }
+}
+
+async function loadWareCategories() {
+    try {
+        const response = await fetch(WARE_URL);
+        const data = await response.json();
+        const container = document.getElementById('wareCategories');
+        if (!container) return;
+        container.innerHTML = data.categories.map(cat => `
+            <a href="ware.html#${cat.id}" class="ware-cat-card" role="listitem">
+                <div class="ware-cat-icon" aria-hidden="true">${cat.icon}</div>
+                <div class="ware-cat-name">${cat.name}</div>
+                <div class="ware-cat-name-cn">${cat.nameCn}</div>
+                <div class="ware-cat-desc">${cat.description}</div>
+            </a>
+        `).join('');
+    } catch (e) { console.error(e); }
+}
+
+function renderWare() {
+    const grid = document.getElementById('wareGrid');
+    if (!grid) return;
+    const filtered = currentWareFilter === 'all' 
+        ? allWare.items 
+        : allWare.items.filter(w => w.category === currentWareFilter);
+    if (filtered.length === 0) {
+        grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--color-text-light);"><p>🫖 Ничего не найдено в этой категории</p></div>`;
+        return;
+    }
+    grid.innerHTML = filtered.map(item => createWareCard(item)).join('');
+}
+
+function createWareCard(item) {
+    const cat = allWare.categories.find(c => c.id === item.category);
+    return `
+        <article class="ware-card" role="listitem" itemscope itemtype="https://schema.org/Product">
+            <div class="ware-image">
+                <span class="ware-image-placeholder" aria-hidden="true">${cat ? cat.icon : '🫖'}</span>
+                <span class="ware-badge">${cat ? cat.name : 'Посуда'}</span>
+            </div>
+            <div class="ware-info">
+                <h3 class="ware-name" itemprop="name">${item.name}</h3>
+                <div class="ware-name-cn">${item.nameCn}</div>
+                <div class="ware-meta">
+                    ${item.material ? `<span class="ware-tag">${item.material}</span>` : ''}
+                    ${item.volume ? `<span class="ware-tag">${item.volume}</span>` : ''}
+                    ${item.size ? `<span class="ware-tag">${item.size}</span>` : ''}
+                </div>
+                <p class="ware-desc" itemprop="description">${item.desc}</p>
+                <div class="ware-footer">
+                    <span class="ware-price" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+                        <span itemprop="price">${item.price.replace(' ₽', '').replace(' ', '')}</span>
+                        <span itemprop="priceCurrency" content="RUB">₽</span>
+                    </span>
+                    <span class="ware-material">${item.material || ''}</span>
+                </div>
+            </div>
+        </article>
+    `;
+}
+
+function setupWareFilters() {
+    const buttons = document.querySelectorAll('.filter-btn[data-ware-filter]');
+    buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            buttons.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-pressed', 'false'); });
+            btn.classList.add('active');
+            btn.setAttribute('aria-pressed', 'true');
+            currentWareFilter = btn.dataset.wareFilter;
+            renderWare();
+        });
+    });
+}
+
+// ===== МОБИЛЬНОЕ МЕНЮ =====
 function setupMobileMenu() {
     const toggle = document.querySelector('.menu-toggle');
     const nav = document.querySelector('.main-nav');
     if (!toggle || !nav) return;
-
     toggle.addEventListener('click', () => {
-        nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
-        nav.style.position = 'absolute';
-        nav.style.top = '72px';
-        nav.style.left = '0';
-        nav.style.right = '0';
-        nav.style.background = 'var(--color-bg)';
-        nav.style.flexDirection = 'column';
-        nav.style.padding = '20px';
-        nav.style.borderBottom = '1px solid var(--color-border)';
-        nav.style.zIndex = '99';
+        const isOpen = nav.style.display === 'flex';
+        nav.style.display = isOpen ? 'none' : 'flex';
+        toggle.setAttribute('aria-expanded', String(!isOpen));
+        if (!isOpen) {
+            nav.style.position = 'absolute';
+            nav.style.top = '72px';
+            nav.style.left = '0';
+            nav.style.right = '0';
+            nav.style.background = 'var(--color-bg)';
+            nav.style.flexDirection = 'column';
+            nav.style.padding = '20px';
+            nav.style.borderBottom = '1px solid var(--color-border)';
+            nav.style.zIndex = '99';
+        }
     });
 }
 
-// ===== УТИЛИТЫ ДЛЯ СТРАНИЦЫ ЧАЯ =====
-// Получение параметра URL
+// ===== УТИЛИТЫ =====
 function getUrlParam(name) {
-    const params = new URLSearchParams(window.location.search);
-    return params.get(name);
+    return new URLSearchParams(window.location.search).get(name);
 }
 
-// Форматирование текста
-function formatText(text) {
-    if (!text) return '';
-    return text.replace(/\n/g, '<br>');
-}
-
-// Экспорт для использования в других скриптах
-window.Teapedia = {
-    allTeas,
-    getUrlParam,
-    formatText,
-    loadTeas
-};
+// Экспорт
+window.Teapedia = { allTeas, allWare, getUrlParam, loadTeas, loadWare };
