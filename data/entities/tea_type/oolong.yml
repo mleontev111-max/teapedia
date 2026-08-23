@@ -1,0 +1,12 @@
+type: tea_type
+id: oolong
+schema_version: 1.0.0
+status: draft
+name_ru: Улун
+name_zh: 乌龙茶
+pinyin: Wūlóngchá
+aliases: [oolong]
+tags: [tea-category]
+summary: "Одна из основных категорий китайского чая."
+relations: []
+sources: []
