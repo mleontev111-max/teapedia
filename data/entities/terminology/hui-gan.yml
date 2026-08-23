@@ -1,0 +1,12 @@
+type: terminology
+id: hui-gan
+schema_version: 1.0.0
+status: draft
+name_ru: Хуэй Гань
+name_zh: 回甘
+pinyin: Huí Gān
+aliases: [hui gan]
+tags: [tasting, aftertaste]
+summary: "Термин дегустационного словаря, описывающий возвращающуюся сладость или сладкое послевкусие после глотка."
+relations: []
+sources: []
