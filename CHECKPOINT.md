@@ -4,25 +4,30 @@
 23 августа 2026
 
 ## Статус
-**Wave 0 технически реализована. Перед окончательным закрытием требуется подтвердить зелёный прогон GitHub Actions.**
+**✅ Wave 0 закрыта. Knowledge Graph v1 проверен автоматическим CI.**
 
 ## Главный принцип
 Teapedia развивается как **knowledge graph**, а не как блог. HTML-страницы являются представлением структурированных сущностей и их связей.
 
-## ✅ Что уже зафиксировано
-
+## Канонические документы
 - `SCHEMA.md` — Knowledge Graph Schema v1 (`1.0.0`).
-- `KNOWLEDGE_GRAPH_PLAN.md` — план развития графа примерно до 140 фундаментальных сущностей.
+- `KNOWLEDGE_GRAPH_PLAN.md` — entity-first план развития примерно до 140 фундаментальных сущностей.
 - `TEAPEDIA_PLAN.md` — тематический backlog контента.
-- постоянные ID в lowercase Latin `kebab-case`.
-- разделение `Tea → TeaBatch → Product`.
-- направленные relations и автоматически вычисляемые обратные связи.
-- tasting как структурированные поля, а не только проза.
-- политика источников и статусов `draft/review/published/deprecated`.
 
-## 🧩 Эталонный граф
+## ✅ Что реализовано в Wave 0
 
-Созданы базовые узлы:
+- постоянные ID в lowercase Latin `kebab-case`;
+- разделение `Tea → TeaBatch → Product`;
+- направленные relations;
+- автоматические обратные связи через generated index;
+- tasting как структурированные поля;
+- source/fact-check policy;
+- статусы `draft/review/published/deprecated`;
+- автоматический validator;
+- автоматический reverse-index builder;
+- GitHub Actions CI.
+
+## 🧩 Эталонные сущности
 
 1. `province/fujian`
 2. `region/anxi`
@@ -35,7 +40,6 @@ Teapedia развивается как **knowledge graph**, а не как бл�
 ## 🛍️ Первый реальный граф THE CHAI
 
 Добавлены:
-
 - `producer/anxi-yaohui-tea-shop`
 - `tea_batch/tieguanyin-anxi-nongxiang-2026-yaohui`
 - `product/tieguanyin-nongxiang-7g-piece`
@@ -46,9 +50,9 @@ Teapedia развивается как **knowledge graph**, а не как бл�
 - чай из исходной упаковки **250 г** продаётся по граммам (`sale_unit: gram`);
 - 250 г не является фиксированной розничной фасовкой.
 
-Не подтверждённые сведения партии сохранены как неизвестные/непроверенные: конкретный сезон, деревня, высота, точный культивар партии и степень обжарки.
+Не подтверждённые сведения партии оставлены неизвестными/непроверенными: сезон, конкретная деревня, высота, точный культивар партии, степень обжарки.
 
-## 🔗 Проверяемая цепочка
+## 🔗 Проверенная цепочка
 
 ```text
 Product 7g ─┐
@@ -62,31 +66,44 @@ Loose tea ──┘               │
 TeaBatch → Producer/Supplier: Anxi Yaohui
 ```
 
-## 🧪 Автоматическая проверка графа
+## 🧪 Автоматическая проверка
 
-Добавлены:
+Файлы:
+- `requirements.txt`
+- `scripts/validate_graph.py`
+- `scripts/build_graph_index.py`
+- `.github/workflows/validate-knowledge-graph.yml`
+- `.gitignore`
 
-- `requirements.txt` — PyYAML;
-- `scripts/validate_graph.py` — валидатор сущностей и связей;
-- `scripts/build_graph_index.py` — генератор общего и обратного индекса;
-- `.github/workflows/validate-knowledge-graph.yml` — GitHub Actions CI;
-- `.gitignore` — `data/generated/` не коммитится вручную.
-
-### Валидатор проверяет
-
-- допустимые типы сущностей;
+Валидатор проверяет:
+- типы сущностей;
 - обязательные поля;
-- ID в `kebab-case`;
+- `kebab-case` ID;
 - соответствие `folder/type/id/filename`;
-- версии схемы;
-- допустимые статусы;
+- schema version;
+- статусы;
 - допустимые relations;
-- существование target entity для каждой связи;
-- дублирующиеся сущности и relations.
+- существование target entity;
+- дубликаты сущностей и relations.
 
-### Reverse index
+`build_graph_index.py` строит `data/generated/graph-index.json` и вычисляет incoming/reverse links из прямых YAML-связей.
 
-`build_graph_index.py` строит `data/generated/graph-index.json` из исходных YAML и автоматически вычисляет входящие связи. Обратные связи не хранятся вручную, чтобы избежать расхождений.
+## ✅ CI-подтверждение
+
+Технический PR `#1` использован для реального теста pipeline.
+
+Workflow: `Validate Knowledge Graph`  
+Run: `32665804648`  
+Result: **SUCCESS**
+
+Успешно прошли шаги:
+- установка зависимостей;
+- валидация сущностей и relations;
+- генерация reverse graph index;
+- проверка summary;
+- загрузка generated graph artifact.
+
+PR #1 после зелёного CI объединён в `main`.
 
 ## 📁 Текущая data-архитектура
 
@@ -104,19 +121,19 @@ data/entities/
 └── terminology/
 ```
 
-По мере Wave 1 добавляются предусмотренные Schema v1 типы: `processing`, `teaware`, `history` и другие.
+В Wave 1 будут добавляться предусмотренные Schema v1 типы, включая `processing`, `teaware`, `history`.
 
-## ⚠️ Что ещё не считаем завершённым
+## ▶️ Следующий этап: Wave 1
 
-1. Нужно увидеть успешный CI-прогон `Validate Knowledge Graph` на `main`.
-2. После зелёного CI создать стабильную контрольную ветку `checkpoint/knowledge-graph-wave0`.
-3. Затем начинать Wave 1 и расширять фундаментальные сущности.
+Цель — расширить фундамент графа без массового HTML-дублирования.
 
-## ▶️ Следующий шаг
-
-**Подтвердить CI → закрыть Wave 0 → начать Wave 1.**
-
-Первая Wave 1 должна расширять граф системно: категории чая, ключевые провинции/регионы, базовые термины и гайды по завариванию — без массового HTML-дублирования.
+Приоритет Wave 1:
+1. 6 базовых категорий чая;
+2. 7 ключевых провинций;
+3. ключевые регионы/терруары;
+4. 10 базовых терминов;
+5. базовые гайды по завариванию;
+6. все новые узлы проходят CI до попадания в стабильный checkpoint.
 
 ---
 
