@@ -1,0 +1,16 @@
+type: region
+id: anxi
+schema_version: 1.0.0
+status: draft
+name_ru: Аньси
+name_zh: 安溪
+pinyin: Ānxī
+region_kind: county
+aliases: []
+tags: [fujian, oolong]
+summary: "Чайный регион в провинции Фуцзянь."
+relations:
+  - relation: PART_OF
+    type: province
+    id: fujian
+sources: []
