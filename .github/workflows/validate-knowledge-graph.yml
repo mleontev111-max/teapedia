@@ -1,21 +1,10 @@
-name: Validate Knowledge Graph
+name: Validate Teapedia
 
 on:
   push:
     branches: [main]
-    paths:
-      - 'data/entities/**'
-      - 'scripts/validate_graph.py'
-      - 'scripts/build_graph_index.py'
-      - 'requirements.txt'
-      - '.github/workflows/validate-knowledge-graph.yml'
   pull_request:
-    paths:
-      - 'data/entities/**'
-      - 'scripts/validate_graph.py'
-      - 'scripts/build_graph_index.py'
-      - 'requirements.txt'
-      - '.github/workflows/validate-knowledge-graph.yml'
+    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -23,7 +12,7 @@ permissions:
 
 jobs:
   validate:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -32,16 +21,41 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-          cache: 'pip'
+          cache: pip
 
       - name: Install dependencies
         run: pip install -r requirements.txt
+
+      - name: Check Python syntax
+        run: python -m py_compile scripts/validate_graph.py scripts/build_graph_index.py
 
       - name: Validate entity schema and relations
         run: python scripts/validate_graph.py
 
       - name: Build reverse graph index
         run: python scripts/build_graph_index.py
+
+      - name: Validate legacy JSON
+        run: |
+          python -m json.tool data/teas.json >/dev/null
+          python -m json.tool data/ware.json >/dev/null
+
+      - name: Static HTTP smoke
+        run: |
+          python -m http.server 8000 >/tmp/teapedia-http.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid"' EXIT
+          for attempt in 1 2 3 4 5; do
+            if curl --fail --silent http://127.0.0.1:8000/index.html >/dev/null; then
+              break
+            fi
+            sleep 1
+          done
+          curl --fail --silent http://127.0.0.1:8000/index.html >/dev/null
+          curl --fail --silent http://127.0.0.1:8000/tea.html >/dev/null
+          curl --fail --silent http://127.0.0.1:8000/encyclopedia/index.html >/dev/null
+          curl --fail --silent http://127.0.0.1:8000/data/teas.json >/dev/null
+          curl --fail --silent http://127.0.0.1:8000/data/ware.json >/dev/null
 
       - name: Show generated graph summary
         run: |
