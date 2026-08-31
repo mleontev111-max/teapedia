@@ -1,0 +1,19 @@
+{
+  "standard_version": "1.0",
+  "project": "mleontev111-max/teapedia",
+  "entrypoint": "README.md",
+  "status_file": "PROJECT_STATUS.md",
+  "agent_protocol": "AGENTS.md",
+  "questions": {
+    "project": {"source": "PROJECT_STATUS.md", "contains": "Teapedia currently contains two layers"},
+    "current_state": {"source": "PROJECT_STATUS.md", "contains": "Current verified baseline"},
+    "local_services": {"source": "PROJECT_STATUS.md", "contains": "There is no application database, Docker stack"},
+    "remote_services": {"source": "PROJECT_STATUS.md", "contains": "GitHub Pages"},
+    "data": {"source": "PROJECT_STATUS.md", "contains": "data/entities"},
+    "secrets": {"source": "PROJECT_STATUS.md", "contains": "runtime secret requirement"},
+    "start": {"source": "PROJECT_STATUS.md", "contains": "## Clean start"},
+    "verify": {"source": "PROJECT_STATUS.md", "contains": "run the graph validator"},
+    "must_not_change": {"source": "PROJECT_STATUS.md", "contains": "## Safety boundaries"},
+    "next_action": {"source": "PROJECT_STATUS.md", "contains": "## ONE NEXT ACTION"}
+  }
+}
