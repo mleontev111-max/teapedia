@@ -3,6 +3,10 @@
 ## Status
 This document supersedes the blog-first interpretation of `TEAPEDIA_PLAN.md`. The earlier 129-article plan remains useful as a content backlog, but the primary architecture is now entity-first and schema-first.
 
+As of 2026-09-03, this curated graph is the reviewed middle layer of the wider RAW Knowledge Store architecture documented in `docs/architecture/RAW_KNOWLEDGE_STORE.md`. PostgreSQL stores operational lineage, claims and candidates; promotion into YAML/Git remains explicit and reviewed.
+
+There is no `canonical_article`. The canonical object is a stable, language-independent entity. Names in Russian, Chinese, English, pinyin and other languages are parallel records; English is not mandatory or globally canonical. Articles remain editorial projections.
+
 ## Foundation target
 Approximately 140 foundational entities:
 - TeaType: 8
@@ -36,6 +40,10 @@ Rules:
 - `Tea`, `TeaBatch`, and `Product` are separate layers.
 - `Tasting` is structured primarily at TeaBatch level using controlled vocabulary.
 - Disputed factual fields require sources before publication.
+- Claims are atomic and preserve evidence, counter-evidence and unresolved conflicts.
+- RAW documents and assets are immutable/versioned; derived processing never overwrites them.
+- Assets use SHA-256 identity and keep rights approval separate from publication approval.
+- Semantic chunks follow document sections and preserve source-version lineage.
 
 ## Wave 1 — 35 entities
 - 6 tea categories
@@ -66,3 +74,5 @@ and independently connect to:
 `Tea → TeaType`, `Tea → Cultivar`, `Tea → Brewing`, `TeaBatch → Tasting`, `Product → marketplace listing`.
 
 The canonical technical contract is `SCHEMA.md`.
+
+For the operational ingestion layer, the canonical technical contract is `docs/architecture/RAW_KNOWLEDGE_STORE.md` plus the migration proposal under `db/migrations/`. These contracts extend rather than replace `SCHEMA.md`.

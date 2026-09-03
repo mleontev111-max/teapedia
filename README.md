@@ -24,9 +24,38 @@ git log -1 --oneline
 
 GitHub `origin/main` — канонический код. Исторические checkpoint SHA не заменяют проверку текущего HEAD.
 
-## Архитектура: два слоя
+## Официальная архитектура
 
-### 1. Текущий статический сайт
+Полный канонический поток принят 2026-09-03:
+
+```text
+Sources
+  -> immutable RAW documents/assets
+  -> processing/document versions + semantic section chunks
+  -> claims/evidence/conflicts + entities/relations
+  -> curated Knowledge Graph in YAML/Git
+  -> editorial draft -> review -> published
+  -> allowlisted public Teapedia on GitHub Pages
+  -> later: pgvector/RAG -> THE CHAI AI
+```
+
+Подробный контракт и MVP PostgreSQL proposal:
+`docs/architecture/RAW_KNOWLEDGE_STORE.md`. Первая migration proposal находится
+в `db/migrations/0001_raw_knowledge_store.sql`.
+
+Канонический объект знаний — entity, а не `canonical_article`. Имена
+мультиязычны, без обязательного канонического английского. Claims, evidence и
+конфликты хранятся отдельно. RAW неизменяем и версионируем; assets адресуются по
+SHA-256, а `rights_status` не смешивается с `publication_status`.
+
+PostgreSQL становится операционным knowledge store после развёртывания первой
+миграции. Существующие YAML/Git остаются curated editorial layer и не заменяются
+БД. `pgvector` устанавливается рано для совместимости схемы, но embeddings не
+являются первым приоритетом.
+
+### Существующие рабочие слои
+
+#### 1. Текущий статический сайт
 
 Сайт — обычные HTML/CSS/JavaScript-файлы без серверной БД, Docker и application secrets.
 
@@ -50,7 +79,7 @@ encyclopedia/
 
 Поэтому изменение YAML knowledge graph **само по себе пока не меняет публичный HTML-каталог**.
 
-### 2. Knowledge Graph v1
+#### 2. Knowledge Graph v1
 
 Новая каноническая модель структурированных знаний находится в:
 
@@ -93,6 +122,7 @@ pip install -r requirements.txt
 
 ```bash
 python scripts/validate_graph.py
+python scripts/validate_db_schema.py
 python scripts/build_graph_index.py
 python -m json.tool data/teas.json >/dev/null
 python -m json.tool data/ware.json >/dev/null
@@ -151,15 +181,17 @@ README старой версии содержал инструкцию по бу
 
 ## Secrets, БД и контейнеры
 
-Для текущей архитектуры:
+Для текущего статического приложения:
 
 - application secrets: нет;
 - `.env`: не нужен;
-- database: нет;
+- подключённой runtime database: нет;
 - Docker containers: нет;
 - persistent runtime state: нет.
 
-Все канонические данные лежат в Git как JSON/YAML/content files.
+Первая PostgreSQL migration пока является проверяемым proposal: она не
+подключена к GitHub Pages и не создаёт новых runtime secrets. До её развёртывания
+все curated/public данные продолжают лежать в Git как JSON/YAML/content files.
 
 ## Как добавлять знания
 

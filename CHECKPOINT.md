@@ -1,3 +1,40 @@
+# CHECKPOINT: 2026-09-03 — RAW Knowledge Store architecture
+
+## Status
+
+Accepted as the official target architecture. This checkpoint extends the
+existing Knowledge Graph and editorial pipeline; it does not replace them or
+change the allowlisted GitHub Pages deploy.
+
+## Git evidence
+
+- exact `origin/main` SHA before work: `79c73aef572092b3f7c1ad3fb2189f98af3bd9ec`
+- working branch: `architecture/raw-knowledge-store`
+- architecture implementation SHA: to be recorded after the implementation commit
+- pull request: to be recorded after the branch is pushed
+
+## Accepted decisions
+
+- canonical entity, not `canonical_article`;
+- multilingual names without mandatory canonical English;
+- explicit claims, evidence and conflict handling;
+- immutable/versioned RAW documents and derived document versions;
+- assets addressed by SHA-256, with rights and publication states separated;
+- PostgreSQL as the operational knowledge store;
+- YAML/Git as the curated graph/editorial layer;
+- semantic chunks based on document sections;
+- pgvector installed early, embeddings deferred behind provenance and quality;
+- roadmap order: schema/migration, Teapedia collector, TeaTerra collector,
+  first 100 audited documents, then scale.
+
+## Safety invariants
+
+The existing YAML entity contract, editorial `draft -> review -> published`
+gate and `build/public` allowlist remain unchanged. No RAW, database or private
+editorial content is added to the Pages artifact.
+
+---
+
 # 🎯 CHECKPOINT: Teapedia — Knowledge Graph Wave 0
 
 ## Дата

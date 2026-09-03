@@ -5,9 +5,9 @@
   "status_file": "PROJECT_STATUS.md",
   "agent_protocol": "AGENTS.md",
   "questions": {
-    "project": {"source": "PROJECT_STATUS.md", "contains": "Teapedia currently contains two layers"},
+    "project": {"source": "PROJECT_STATUS.md", "contains": "Teapedia currently contains two deployed/curated layers"},
     "current_state": {"source": "PROJECT_STATUS.md", "contains": "Current verified baseline"},
-    "local_services": {"source": "PROJECT_STATUS.md", "contains": "There is no application database, Docker stack"},
+    "local_services": {"source": "PROJECT_STATUS.md", "contains": "There is no deployed application database, Docker stack"},
     "remote_services": {"source": "PROJECT_STATUS.md", "contains": "GitHub Pages"},
     "data": {"source": "PROJECT_STATUS.md", "contains": "data/entities"},
     "secrets": {"source": "PROJECT_STATUS.md", "contains": "runtime secret requirement"},
