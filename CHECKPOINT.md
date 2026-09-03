@@ -10,8 +10,8 @@ change the allowlisted GitHub Pages deploy.
 
 - exact `origin/main` SHA before work: `79c73aef572092b3f7c1ad3fb2189f98af3bd9ec`
 - working branch: `architecture/raw-knowledge-store`
-- architecture implementation SHA: to be recorded after the implementation commit
-- pull request: to be recorded after the branch is pushed
+- architecture implementation SHA: `f47bb392a24c3c9f2efc1c7d2e8955e25304c2bc`
+- pull request: `#5` — https://github.com/mleontev111-max/teapedia/pull/5
 
 ## Accepted decisions
 
