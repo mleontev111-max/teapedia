@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Редакция статей — Teapedia</title>
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <header class="topbar"><a href="../index.html">Teapedia</a><span>Редакция статей</span></header>
+  <main class="layout">
+    <aside class="queue">
+      <div class="queue-head"><h1>Материалы</h1><select id="filter"><option value="all">Все статусы</option><option value="draft">Черновики</option><option value="review">На проверке</option><option value="published">Опубликованные</option></select></div>
+      <div id="article-list" aria-live="polite"></div>
+    </aside>
+    <section id="workspace" class="workspace"><p class="empty">Выберите статью слева.</p></section>
+  </main>
+  <template id="editor-template">
+    <div class="editor-head"><div><span class="eyebrow">Карточка статьи</span><h2 data-field="title"></h2></div><span data-field="badge" class="badge"></span></div>
+    <div class="notice">Изменения остаются в браузере, пока вы не скачаете JSON и не добавите его в репозиторий. На сайт попадают только одобренные файлы со статусом <b>published</b>.</div>
+    <div class="controls"><label>Статус<select data-input="status"><option value="draft">Черновик</option><option value="review">На проверке</option><option value="published">Опубликовано</option></select></label><label class="check"><input type="checkbox" data-input="editorial"> Редактура одобрена</label><label class="check"><input type="checkbox" data-input="license"> Лицензии одобрены</label></div>
+    <div class="actions"><button data-action="preview">Предпросмотр</button><button data-action="download" class="primary">Скачать обновлённый JSON</button></div>
+    <article data-field="preview" class="preview"></article>
+  </template>
+  <script src="admin.js"></script>
+</body>
+</html>
