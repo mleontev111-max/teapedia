@@ -1,3 +1,5 @@
-data/generated/
+data/generated/*
+!data/generated/articles-admin.json
+!data/generated/articles-public.json
 __pycache__/
 *.pyc

@@ -1,0 +1,39 @@
+schema_version: 1.0.0
+source_language: en
+target_language: ru
+terms:
+  - source: white tea
+    preferred_ru: белый чай
+    avoid_ru: [белый сорт чая]
+    note: Категория чая; писать со строчной буквы.
+  - source: bud
+    preferred_ru: почка
+    alternatives_ru: [чайная почка]
+    note: Не переводить как «бутон».
+  - source: leaf shoot
+    preferred_ru: молодой побег
+  - source: cultivar
+    preferred_ru: культивар
+    alternatives_ru: [сорт чайного растения]
+    note: В научном контексте предпочтительно «культивар».
+  - source: processing
+    preferred_ru: обработка
+  - source: oxidation
+    preferred_ru: окисление
+    avoid_ru: [ферментация]
+    note: Не смешивать ферментативное окисление с микробной ферментацией.
+  - source: withering
+    preferred_ru: завяливание
+  - source: Fujian Province
+    preferred_ru: провинция Фуцзянь
+    name_zh: 福建省
+    pinyin: Fújiàn Shěng
+  - source: Baihao Yinzhen
+    preferred_ru: Байхао Иньчжэнь
+    alternatives_ru: [Серебряные иглы с белым ворсом]
+    name_zh: 白毫銀針
+    pinyin: Báiháo Yínzhēn
+  - source: Da Bai
+    preferred_ru: Да Бай
+    alternatives_ru: [Большой белый]
+    name_zh: 大白

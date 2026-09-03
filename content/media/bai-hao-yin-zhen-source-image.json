@@ -1,0 +1,17 @@
+{
+  "schema_version": "1.0.0",
+  "id": "bai-hao-yin-zhen-source-image",
+  "verification_status": "pending",
+  "source_page_url": "https://teapedia.org/en/Bai_Hao_Yin_Zhen",
+  "original_file_url": "https://teapedia.org/pool/images/Baihao-Yinzhen.jpg",
+  "author": null,
+  "license": null,
+  "license_url": null,
+  "local_path": null,
+  "alt_ru": "Чай Байхао Иньчжэнь",
+  "caption_ru": "Кандидат на иллюстрацию; не используется до отдельной проверки лицензии файла.",
+  "article_ids": ["bai-hao-yin-zhen"],
+  "entity_refs": [{"type": "province", "id": "fujian"}],
+  "review_notes_ru": ["Установить автора и точную лицензию на странице файла Teapedia."],
+  "accessed": "2026-09-03"
+}

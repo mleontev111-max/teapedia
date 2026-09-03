@@ -1,6 +1,6 @@
 # PROJECT_STATUS.md — Teapedia
 
-Updated: 2026-08-31
+Updated: 2026-09-03
 
 Teapedia currently contains two layers: a static HTML/JavaScript presentation that reads `data/teas.json` and `data/ware.json`, and Knowledge Graph v1 entities under `data/entities/`. The graph is the structured model for new knowledge, but it is not yet automatically rendered into the legacy static catalog.
 
@@ -28,7 +28,9 @@ Do not invent tea/batch/producer facts, edit generated reverse links as canonica
 - legacy JSON and graph entities can drift;
 - branch protection is not enabled on the audited baseline;
 - Wave 0 is foundation rather than full content coverage.
+- the editorial admin is Git-first and intentionally has no direct server-side save/authentication on GitHub Pages;
+- the first imported article remains a draft and its candidate image remains blocked pending separate license verification.
 
 ## ONE NEXT ACTION
 
-Add or normalize the six base `tea_type` entities as the first small Wave 1 slice, validate them, rebuild the graph index, and require green CI on the exact PR head before merge.
+Review the Russian Bai Hao Yin Zhen draft, independently verify its factual claims and the source image license, then move it to `review` without publishing it yet.

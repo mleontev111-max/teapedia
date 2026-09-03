@@ -221,3 +221,15 @@ Wave 0 is complete when:
 4. A future `Product → TeaBatch → Tea → Region → Province → TeaType → Brewing` path can be represented without schema changes.
 5. Reverse-link generation strategy is fixed.
 6. IDs and controlled tasting vocabularies are fixed for v1.
+
+## 14. Editorial article projection
+
+Editorial articles are projections over the graph, not a replacement for graph
+entities. Canonical article JSON lives in `content/articles/` and may reference
+existing nodes with `entity_refs`. Status transitions are `draft`, `review`, and
+`published`; only `published` enters the public generated manifest.
+
+Media records live separately in `content/media/` and may bind to both articles
+and entities. A published article can use media only when its record is
+`verified` and contains author, source, exact license, license URL, local path,
+and Russian alt text.

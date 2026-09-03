@@ -95,6 +95,9 @@
         <article class="encyclopedia-card"><div class="card-header"><div class="card-icon">📜</div><h3>История чая в Китае</h3><span class="chinese-title">茶史</span></div><div class="card-body"><p>От легенды о Шэньнуне до чайных империй Тан и Сун. Как чай изменил мировую торговлю, культуру и политику на тысячелетия.</p></div><div class="card-footer"><a href="articles/history.html" class="read-more">Читать статью →</a></div></article>
         <article class="encyclopedia-card"><div class="card-header"><div class="card-icon">🔬</div><h3>Научные основы чая</h3><span class="chinese-title">茶科学</span></div><div class="card-body"><p>Химия чайного листа: катехины, теанин, кофеин. Как ферментация меняет состав, и что наука говорит о пользе чая для здоровья.</p></div><div class="card-footer"><a href="articles/science.html" class="read-more">Читать статью →</a></div></article>
     </div>
+    <h2 class="section-title">Новые статьи</h2>
+    <p class="section-subtitle">Материалы, прошедшие редакционную и лицензионную проверку</p>
+    <div class="encyclopedia-grid" id="published-articles"></div>
 </div>
 <footer class="footer">
     <div class="footer-content">
@@ -105,5 +108,12 @@
         <div class="footer-copy"><p>© 2026 THE CHAI. Все права защищены.</p><p>Невский проспект, 100 | Балтийский бульвар, 4 | Санкт-Петербург</p></div>
     </div>
 </footer>
+<script>
+fetch('../data/generated/articles-public.json').then(r => r.json()).then(data => {
+    const root = document.querySelector('#published-articles');
+    root.innerHTML = data.articles.map(article => `<article class="encyclopedia-card"><div class="card-header"><div class="card-icon">🍵</div><h3>${escapeHtml(article.title_ru)}</h3><span class="chinese-title">${escapeHtml(article.subtitle_ru || '')}</span></div><div class="card-body"><p>${escapeHtml(article.summary_ru)}</p></div><div class="card-footer"><a href="article.html?id=${encodeURIComponent(article.id)}" class="read-more">Читать статью →</a></div></article>`).join('') || '<p class="section-subtitle">Проверенные статьи скоро появятся.</p>';
+}).catch(() => {});
+function escapeHtml(value) { return String(value || '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char])); }
+</script>
 </body>
 </html>

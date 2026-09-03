@@ -1,0 +1,40 @@
+{
+  "schema_version": "1.0.0",
+  "id": "bai-hao-yin-zhen",
+  "status": "draft",
+  "title_ru": "Байхао Иньчжэнь",
+  "subtitle_ru": "Белый чай из провинции Фуцзянь",
+  "summary_ru": "Черновик русскоязычной статьи о белом чае Байхао Иньчжэнь, подготовленный по материалу Teapedia и ожидающий фактологической проверки.",
+  "sections": [
+    {
+      "heading_ru": "Что это за чай",
+      "paragraphs_ru": [
+        "Байхао Иньчжэнь (白毫銀針), также известный как «Серебряные иглы с белым ворсом», относят к белым чаям. В исходной статье местом производства названа провинция Фуцзянь.",
+        "Для изготовления используют молодые чайные почки. Источник связывает традиционное сырьё с культиварами группы Да Бай; перед публикацией это утверждение нужно подтвердить независимым профильным источником."
+      ]
+    }
+  ],
+  "entity_refs": [
+    {"type": "province", "id": "fujian"}
+  ],
+  "media_ids": [],
+  "source": {
+    "provider": "teapedia.org",
+    "title": "Bai Hao Yin Zhen",
+    "canonical_url": "https://teapedia.org/en/Bai_Hao_Yin_Zhen",
+    "revision_url": "https://teapedia.org/eng/index.php?title=Bai_Hao_Yin_Zhen&oldid=2801",
+    "accessed": "2026-09-03",
+    "license": "CC BY-SA 3.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "adaptation_notice_ru": "Перевод и адаптация материала Teapedia; текст изменён и сокращён."
+  },
+  "review": {
+    "editorial_approved": false,
+    "license_approved": false,
+    "notes_ru": [
+      "Проверить происхождение и перечень допустимых культиваров по независимым источникам.",
+      "Изображение из исходной статьи не импортировано: лицензия и автор файла отдельно не подтверждены."
+    ]
+  },
+  "updated_at": "2026-09-03"
+}

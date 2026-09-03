@@ -27,13 +27,16 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Check Python syntax
-        run: python -m py_compile scripts/validate_graph.py scripts/build_graph_index.py
+        run: python -m py_compile scripts/validate_graph.py scripts/build_graph_index.py scripts/build_articles.py scripts/import_teapedia.py
 
       - name: Validate entity schema and relations
         run: python scripts/validate_graph.py
 
       - name: Build reverse graph index
         run: python scripts/build_graph_index.py
+
+      - name: Validate and build editorial articles
+        run: python scripts/build_articles.py
 
       - name: Validate legacy JSON
         run: |
@@ -56,6 +59,11 @@ jobs:
           curl --fail --silent http://127.0.0.1:8000/encyclopedia/index.html >/dev/null
           curl --fail --silent http://127.0.0.1:8000/data/teas.json >/dev/null
           curl --fail --silent http://127.0.0.1:8000/data/ware.json >/dev/null
+          curl --fail --silent http://127.0.0.1:8000/admin/index.html >/dev/null
+          curl --fail --silent http://127.0.0.1:8000/data/generated/articles-public.json >/dev/null
+
+      - name: Ensure generated editorial artifacts are current
+        run: git diff --exit-code -- data/generated/articles-admin.json data/generated/articles-public.json
 
       - name: Show generated graph summary
         run: |
