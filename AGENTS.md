@@ -44,10 +44,14 @@ Do not assume one automatically updates the other. There is no graph-to-site gen
 
 The current UI loads legacy JSON through browser `fetch()`.
 
-After static UI/data changes, verify through a local HTTP server, not only `file://`:
+After static UI/data changes, build and verify the public artifact, then test that
+artifact through a local HTTP server, not only `file://`:
 
 ```bash
-python -m http.server 8000
+python scripts/build_articles.py
+python scripts/build_public_site.py
+python scripts/verify_public_artifact.py build/public
+python -m http.server 8000 --directory build/public
 ```
 
 Then inspect the main catalog and any changed page in a browser.
@@ -73,7 +77,12 @@ Current application architecture has no database, no Docker stack, no `.env`, an
 
 Do not add private supplier credentials, personal data, API tokens, or unpublished commercial information to public repository content.
 
-GitHub Pages is the deployment mechanism. A historical instruction mentioning a custom domain is not enough to prove current DNS/domain configuration; verify it before changes.
+GitHub Pages is the deployment mechanism. It must deploy only `build/public`,
+created by the explicit allowlist in `scripts/build_public_site.py`. Never deploy
+the repository root: `admin/`, `content/`, `ingestion/` and
+`data/generated/articles-admin.json` are private/editorial inputs. A historical
+instruction mentioning a custom domain is not enough to prove current DNS/domain
+configuration; verify it before changes.
 
 ## Session end
 

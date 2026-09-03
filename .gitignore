@@ -3,3 +3,4 @@ data/generated/*
 !data/generated/articles-public.json
 __pycache__/
 *.pyc
+build/

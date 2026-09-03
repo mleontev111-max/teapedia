@@ -29,6 +29,7 @@ Do not invent tea/batch/producer facts, edit generated reverse links as canonica
 - branch protection is not enabled on the audited baseline;
 - Wave 0 is foundation rather than full content coverage.
 - the editorial admin is Git-first and intentionally has no direct server-side save/authentication on GitHub Pages;
+- the editorial admin, draft/review JSON and ingestion snapshots are excluded from an allowlisted Pages artifact and verified absent in CI;
 - the first imported article remains a draft and its candidate image remains blocked pending separate license verification.
 
 ## ONE NEXT ACTION

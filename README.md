@@ -98,10 +98,12 @@ python -m json.tool data/teas.json >/dev/null
 python -m json.tool data/ware.json >/dev/null
 ```
 
-Запустить статический сайт:
+Собрать и запустить тот же публичный набор, который получает GitHub Pages:
 
 ```bash
-python -m http.server 8000
+python scripts/build_articles.py
+python scripts/build_public_site.py
+python -m http.server 8000 --directory build/public
 ```
 
 Открыть:
@@ -125,12 +127,19 @@ CI проверяет:
 - валидность legacy JSON;
 - статический HTTP smoke для основных страниц/data files;
 - generated graph artifact.
+- allowlisted Pages artifact и отсутствие в нём редакционных/private paths.
 
 CI не использует secrets и не делает внешних data writes.
 
 ## GitHub Pages
 
 Репозиторий публикуется через GitHub Pages. На baseline `main` `94c2bf63...` GitHub Pages build/deployment завершился SUCCESS.
+
+Pages разворачивается workflow `.github/workflows/deploy-pages.yml` только из
+`build/public`. Этот каталог собирается с нуля явным allowlist и содержит HTML,
+публичные assets, legacy catalog JSON, только опубликованные статьи и только
+проверенные изображения, которые используются опубликованными статьями. Корень
+репозитория не является deploy artifact.
 
 Ожидаемый repository Pages URL:
 
@@ -167,18 +176,24 @@ README старой версии содержал инструкцию по бу
 
 ## Редакционные статьи и импорт
 
-Статьи хранятся в `content/articles/*.json`, а метаданные изображений — в
-`content/media/*.json`. Команда `python scripts/build_articles.py` проверяет их и
-создаёт два разных файла:
+Статьи хранятся в непубликуемом редакционном контуре `content/articles/*.json`,
+а метаданные изображений — в `content/media/*.json`. Команда
+`python scripts/build_articles.py` проверяет их и создаёт два разных файла:
 
-- `articles-admin.json` — все статусы для редакционной страницы `/admin/`;
+- `articles-admin.json` — все статусы для локальной редакционной страницы `/admin/`;
 - `articles-public.json` — только одобренные статьи со статусом `published`.
 
-Админка даёт предпросмотр, выбор `draft → review → published` и скачивает
+Админка запускается только локально из checkout, даёт предпросмотр, выбор
+`draft → review → published` и скачивает
 обновлённый JSON. Из-за статической архитектуры GitHub Pages она не записывает
 данные на сервер: файл нужно проверить и закоммитить. Это намеренный барьер от
 случайной публикации. Сборка отклонит публикацию без редакционного и
 лицензионного одобрения или с непроверенным изображением.
+
+`python scripts/build_public_site.py` никогда не копирует `admin/`,
+`articles-admin.json`, `content/`, `ingestion/`, scripts или source snapshots.
+`python scripts/verify_public_artifact.py build/public` является отдельным
+CI-барьером против их появления в deploy artifact.
 
 Политика источников описана в `SOURCE_POLICY.md`, словарь перевода — в
 `TRANSLATION_GLOSSARY.yml`, воспроизводимые импорты — в
