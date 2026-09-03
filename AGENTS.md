@@ -73,7 +73,9 @@ Do not weaken schema checks or remove relations just to make CI pass without und
 
 ## Secrets / infrastructure
 
-Current application architecture has no database, no Docker stack, no `.env`, and no application secrets.
+The current deployed application has no database, Docker stack, `.env`, or application secrets. The accepted operational-store proposal is documented in `docs/architecture/RAW_KNOWLEDGE_STORE.md`; do not present it as deployed until the migration and infrastructure are actually applied.
+
+PostgreSQL ingestion must not bypass YAML/Git curation or the editorial `draft -> review -> published` gate. RAW captures are immutable. Keep asset `rights_status` separate from `publication_status`.
 
 Do not add private supplier credentials, personal data, API tokens, or unpublished commercial information to public repository content.
 

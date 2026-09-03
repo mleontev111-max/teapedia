@@ -8,6 +8,8 @@
 
 Teapedia is a knowledge graph, not a blog. Content pages are projections of structured entities and their relations.
 
+The graph is the curated layer of the accepted RAW Knowledge Store architecture. Operational source captures, versioned derivatives, claims, evidence and conflicts are defined separately in `docs/architecture/RAW_KNOWLEDGE_STORE.md`. They do not replace this YAML contract.
+
 ## 2. ID rules
 
 - IDs are permanent and language-independent.
@@ -233,3 +235,5 @@ Media records live separately in `content/media/` and may bind to both articles
 and entities. A published article can use media only when its record is
 `verified` and contains author, source, exact license, license URL, local path,
 and Russian alt text.
+
+There is no canonical article in the knowledge model: the canonical object is the language-independent entity. Display names can coexist in multiple languages and scripts; English is not a required canonical language.
