@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.0",
+  "resume_system_version": "1.3",
+  "project": "mleontev111-max/teapedia",
+  "canonical_branch": "main",
+  "state_base_sha": "79c73aef572092b3f7c1ad3fb2189f98af3bd9ec",
+  "active_work_registry": "ACTIVE_WORK.json",
+  "milestone_index": "MILESTONE_INDEX.json",
+  "current_focus_track": "project_ready",
+  "default_resume_track": "editorial",
+  "tracks": {
+    "editorial": {
+      "status": "active",
+      "entrypoint": "PROJECT_STATUS.md",
+      "latest_checkpoint": "docs/checkpoints/2026-09-03-editorial-draft-current.md",
+      "one_next_action": "Review the Russian Bai Hao Yin Zhen draft, independently verify its factual claims and the candidate source-image license, then move the article to review without publishing it yet.",
+      "stop_condition": "Do not publish the article or candidate image before factual and license verification; do not treat draft/review content as public."
+    },
+    "project_ready": {
+      "status": "active",
+      "entrypoint": "START_HERE_FOR_AI.md",
+      "latest_checkpoint": "docs/checkpoints/2026-09-09-resume-gate-v1-3-baseline.md",
+      "one_next_action": "Verify Resume Gate v1.3 on the exact rollout PR head with Project Ready Guard plus ordinary validation CI; merge only on PASS, then synchronize the resume layer into architecture PR #5 and create/refresh its branch-owned STATE.md before continuing that workstream."
+    }
+  }
+}

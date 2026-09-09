@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0",
+  "resume_system_version": "1.3",
+  "project": "mleontev111-max/teapedia",
+  "purpose": "Historical lookup of completed/durable work; not the source for current ONE NEXT ACTION.",
+  "milestones": [
+    {
+      "id": "wave-0-knowledge-graph",
+      "status": "verified_complete",
+      "integration_state": "main",
+      "summary": "Knowledge Graph Wave 0 foundation is complete: stable IDs, Tea/TeaBatch/Product separation, directed relations, source/fact-check policy, validator and reverse-index builder."
+    },
+    {
+      "id": "safe-editorial-workflow",
+      "status": "verified_complete",
+      "integration_state": "main",
+      "commit": "79c73aef572092b3f7c1ad3fb2189f98af3bd9ec",
+      "summary": "Git-first draft/review/published editorial workflow, licensed-media handling, Teapedia ingestion, and allowlisted Pages build are merged. Private editorial inputs remain excluded from public artifact."
+    },
+    {
+      "id": "bai-hao-yin-zhen-draft",
+      "status": "durable_draft",
+      "integration_state": "main",
+      "summary": "Russian Bai Hao Yin Zhen article exists as draft; candidate image remains blocked pending independent license verification. Do not recreate or publish it."
+    },
+    {
+      "id": "raw-knowledge-store",
+      "status": "durable_unmerged",
+      "integration_state": "branch",
+      "branch": "architecture/raw-knowledge-store",
+      "pull_request": 5,
+      "commit": "0116df411be5ff078bf89220bc3e9020503ccb79",
+      "summary": "RAW knowledge store/PostgreSQL-pgvector architecture and migration proposal already exist in PR #5; do not reimplement from scratch."
+    }
+  ]
+}
