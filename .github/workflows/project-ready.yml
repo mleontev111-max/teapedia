@@ -13,12 +13,19 @@ permissions:
 jobs:
   project-ready:
     runs-on: ubuntu-24.04
+    env:
+      PROJECT_RESUME_HEAD_REF: ${{ github.head_ref || github.ref_name }}
+      PROJECT_RESUME_HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Check Project Ready manifest
-        run: python tools/project_ready_guard.py
+      - name: Check Project Ready and Resume Gate
+        run: |
+          python tools/project_ready_guard.py
+          python tools/resume_guard.py
